@@ -3,37 +3,37 @@ class TenjiMaker
     # 以下はサンプルの仮実装なので、このcase文は全部消して自作ロジックに書き直すこと
     case text
     when 'A HI RU'
-      <<~TENJI
+      <<~TENJI.chomp
         o- o- oo
         -- o- -o
         -- oo --
       TENJI
     when 'KI RI N'
-      <<~TENJI
+      <<~TENJI.chomp
         o- o- --
         o- oo -o
         -o -- oo
       TENJI
     when 'SI MA U MA'
-      <<~TENJI
+      <<~TENJI.chomp
         o- o- oo o-
         oo -o -- -o
         -o oo -- oo
       TENJI
     when 'NI WA TO RI'
-      <<~TENJI
+      <<~TENJI.chomp
         o- -- -o o-
         o- -- oo oo
         o- o- o- --
       TENJI
     when 'HI YO KO'
-      <<~TENJI
+      <<~TENJI.chomp
         o- -o -o
         o- -o o-
         oo o- -o
       TENJI
     when 'KI TU NE'
-      <<~TENJI
+      <<~TENJI.chomp
         o- oo oo
         o- -o o-
         -o o- o-
