@@ -1,4 +1,5 @@
 require 'tenji_block'
+require 'romaji'
 
 class TenjiMaker
   # 点字関連の定数
@@ -14,7 +15,8 @@ class TenjiMaker
 
     text.split.map do |char|
       # ローマ字から点字ブロックの情報を取得
-      tb = TenjiBlock.generate(char)
+      r = Romaji.new(char)
+      tb = TenjiBlock.generate(r)
 
       # ブロック情報から各行に出力するテキストを保持
       lines[:first]  << "#{tb[1]}#{tb[4]}"
