@@ -23,9 +23,9 @@ class TenjiMaker
     end
 
     # 各行のテキストを空白区切りで結合
-    each_line_texts = lines.values.map{|text| text.join(" ") }
+    each_line_texts = lines.values.map{|text| text.join(" ")}
 
-    # 各行のテキストを改行コードで区切る
+    # 各行のテキストを改行コードで区切って結合
     each_line_texts.join("\n")
   end
 end
