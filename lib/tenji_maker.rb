@@ -1,6 +1,14 @@
 class TenjiMaker
   def to_tenji(text)
-    # 以下はサンプルの仮実装なので、このcase文は全部消して自作ロジックに書き直すこと
+
+    # TODO:一旦処理をまとめておく,全てのテストケースが通ったらprocをなくす
+    proc = Proc.new do |text|
+      tenji_blocks = text.map do |char|
+        tenji_block(char)
+      end
+      format_tenji(tenji_blocks)
+    end
+
     case text
     when 'A HI RU'
       # <<~TENJI.chomp
@@ -8,22 +16,21 @@ class TenjiMaker
       #   -- o- -o
       #   -- oo --
       # TENJI
-      tenji_blocks = text.split.map do |char|
-        tenji_block(char)
-      end
-      format_tenji(tenji_blocks)
+      proc.call(text.split)
     when 'KI RI N'
-      <<~TENJI.chomp
-        o- o- --
-        o- oo -o
-        -o -- oo
-      TENJI
+      # <<~TENJI.chomp
+      #   o- o- --
+      #   o- oo -o
+      #   -o -- oo
+      # TENJI
+      proc.call(text.split)
     when 'SI MA U MA'
-      <<~TENJI.chomp
-        o- o- oo o-
-        oo -o -- -o
-        -o oo -- oo
-      TENJI
+      # <<~TENJI.chomp
+      #   o- o- oo o-
+      #   oo -o -- -o
+      #   -o oo -- oo
+      # TENJI
+      proc.call(text.split)
     when 'NI WA TO RI'
       <<~TENJI.chomp
         o- -- -o o-
@@ -57,17 +64,29 @@ class TenjiMaker
   #       3 => true, 4 => true,
   #       5 => true, 6 => false
   #     }
+  # ti(ち)
+  # - o
+  # - -
+  # - o
   def tenji_block(char)
-    # ti(ち)
-    # - o
-    # - -
-    # - o
-    # 子音
-    shiin = char.length == 1 ? 'a' : char[0..-2]
-    # 母音
-    boin = char[-1]
-    BOIN[boin].merge(SHIIN[shiin])
+    if OTHER.keys.include?(char)
+      OTHER[char]
+    else
+      # 子音
+      shiin = char.length == 1 ? 'a' : char[0..-2]
+      # 母音
+      boin = char[-1]
+      BOIN[boin].merge(SHIIN[shiin])
+    end
   end
+
+  OTHER = {
+    'N' => {
+      1 => '-', 4 => '-',
+      2 => '-', 5 => 'o',
+      3 => 'o', 6 => 'o',
+    }
+  }
 
   # ① ④
   # ②
