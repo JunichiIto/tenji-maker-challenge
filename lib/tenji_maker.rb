@@ -32,23 +32,26 @@ class TenjiMaker
       # TENJI
       proc.call(text.split)
     when 'NI WA TO RI'
-      <<~TENJI.chomp
-        o- -- -o o-
-        o- -- oo oo
-        o- o- o- --
-      TENJI
+      # <<~TENJI.chomp
+      #   o- -- -o o-
+      #   o- -- oo oo
+      #   o- o- o- --
+      # TENJI
+      proc.call(text.split)
     when 'HI YO KO'
-      <<~TENJI.chomp
-        o- -o -o
-        o- -o o-
-        oo o- -o
-      TENJI
+      # <<~TENJI.chomp
+      #   o- -o -o
+      #   o- -o o-
+      #   oo o- -o
+      # TENJI
+      proc.call(text.split)
     when 'KI TU NE'
-      <<~TENJI.chomp
-        o- oo oo
-        o- -o o-
-        -o o- o-
-      TENJI
+      # <<~TENJI.chomp
+      #   o- oo oo
+      #   o- -o o-
+      #   -o o- o-
+      # TENJI
+      proc.call(text.split)
     end
   end
 
@@ -81,6 +84,31 @@ class TenjiMaker
   end
 
   OTHER = {
+    'YA' => {
+      1 => '-', 4 => 'o',
+      2 => '-', 5 => '-',
+      3 => 'o', 6 => '-',
+    },
+    'YU' => {
+      1 => '-', 4 => 'o',
+      2 => '-', 5 => '-',
+      3 => 'o', 6 => 'o',
+    },
+    'YO' => {
+      1 => '-', 4 => 'o',
+      2 => '-', 5 => 'o',
+      3 => 'o', 6 => '-',
+    },
+    'WA' => {
+      1 => '-', 4 => '-',
+      2 => '-', 5 => '-',
+      3 => 'o', 6 => '-',
+    },
+    'WO' => {
+      1 => '-', 4 => '-',
+      2 => '-', 5 => 'o',
+      3 => 'o', 6 => '-',
+    },
     'N' => {
       1 => '-', 4 => '-',
       2 => '-', 5 => 'o',
@@ -104,11 +132,11 @@ class TenjiMaker
       2 => '-'
     },
     'E' => {
-      1 => '-', 4 => 'o',
+      1 => 'o', 4 => 'o',
       2 => 'o'
     },
     'O' => {
-      1 => 'o', 4 => 'o',
+      1 => '-', 4 => 'o',
       2 => 'o'
     },
   }
