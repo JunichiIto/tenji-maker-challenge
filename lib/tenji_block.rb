@@ -94,4 +94,42 @@ module TenjiBlock
       3 => '-', 6 => '-'
     },
   }.freeze
+
+  # ローマ字を引数に点字情報をHashに格納する
+  # @param [String] ローマ字('HA', 'N', etc..)
+  # @return [Hash]
+  # e.g.) ti(ち)の場合
+  # {
+  #   1 => 'o', 4 => '-',
+  #   2 => 'o', 5 => 'o',
+  #   3 => 'o', 6 => '-',
+  #  }
+  def self.generate(char)
+
+    if UNIQUE_TENJI.keys.include?(char)
+      # 規則性がない文字の場合
+      UNIQUE_TENJI[char]
+    else
+      # 規則性がある文字の場合
+
+      # 初期値(全て'-')
+      tenji = BLANK_TENJI.dup
+
+      # 母音
+      # 末尾の文字が母音
+      vowel_text = char[-1]
+      # 母音の点字情報を反映
+      tenji.merge!(VOWEL_TENJI[vowel_text])
+
+      # 子音
+      if char.length > 1
+        # 2文字以上の場合は末尾の文字だけ除けば子音となる
+        consonant_text = char[0..-2]
+        # 子音の点字情報を反映
+        tenji.merge!(CONSONANT_TENJI[consonant_text])
+      end
+
+      tenji
+    end
+  end
 end
