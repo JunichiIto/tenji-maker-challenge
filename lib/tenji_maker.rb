@@ -1,76 +1,23 @@
 class TenjiMaker
   def to_tenji(text)
-
-    # TODO:一旦処理をまとめておく,全てのテストケースが通ったらprocをなくす
-    proc = Proc.new do |text|
-      tenji_blocks = text.map do |char|
-        tenji_block(char)
-      end
-      format_tenji(tenji_blocks)
+    tenji_blocks = text.split.map do |char|
+      tenji_block(char)
     end
-
-    case text
-    when 'A HI RU'
-      # <<~TENJI.chomp
-      #   o- o- oo
-      #   -- o- -o
-      #   -- oo --
-      # TENJI
-      proc.call(text.split)
-    when 'KI RI N'
-      # <<~TENJI.chomp
-      #   o- o- --
-      #   o- oo -o
-      #   -o -- oo
-      # TENJI
-      proc.call(text.split)
-    when 'SI MA U MA'
-      # <<~TENJI.chomp
-      #   o- o- oo o-
-      #   oo -o -- -o
-      #   -o oo -- oo
-      # TENJI
-      proc.call(text.split)
-    when 'NI WA TO RI'
-      # <<~TENJI.chomp
-      #   o- -- -o o-
-      #   o- -- oo oo
-      #   o- o- o- --
-      # TENJI
-      proc.call(text.split)
-    when 'HI YO KO'
-      # <<~TENJI.chomp
-      #   o- -o -o
-      #   o- -o o-
-      #   oo o- -o
-      # TENJI
-      proc.call(text.split)
-    when 'KI TU NE'
-      # <<~TENJI.chomp
-      #   o- oo oo
-      #   o- -o o-
-      #   -o o- o-
-      # TENJI
-      proc.call(text.split)
-    end
+    format_tenji(tenji_blocks)
   end
 
   # 文字を引数に点字情報をHashに格納する
   # @param [String] ローマ字
   # @return [Hash]
-  # ① ④
-  # ② ⑤
-  # ③ ⑥
-  #     {
-  #       # 点字を表示刷る場合はindexに合わせてbool値を入れる
-  #       1 => true, 2 => false,
-  #       3 => true, 4 => true,
-  #       5 => true, 6 => false
-  #     }
   # ti(ち)
   # - o
   # - -
   # - o
+  #     {
+  #       1 => true, 2 => false,
+  #       3 => true, 4 => true,
+  #       5 => true, 6 => false
+  #     }
   def tenji_block(char)
     if OTHER.keys.include?(char)
       OTHER[char]
@@ -82,6 +29,28 @@ class TenjiMaker
       BOIN[boin].merge(SHIIN[shiin])
     end
   end
+
+  #　tenji_blockの配列から点字フォーマットの文字列を作成
+  # @param [Array] tenji_blockを要素とする配列
+  def format_tenji(tenji_blocks)
+    lines = {
+      first: [],
+      second: [],
+      third: []
+    }
+    tenji_blocks.each do |tb|
+      lines[:first] << "#{tb[1]}#{tb[4]}"
+      lines[:second] << "#{tb[2]}#{tb[5]}"
+      lines[:third] << "#{tb[3]}#{tb[6]}"
+    end
+
+    <<~"TENJI".chomp
+      #{lines[:first].join(" ")}
+      #{lines[:second].join(" ")}
+      #{lines[:third].join(" ")}
+    TENJI
+  end
+
 
   OTHER = {
     'YA' => {
@@ -177,25 +146,4 @@ class TenjiMaker
       3 => '-', 6 => '-'
     },
   }
-
-  #　tenji_blockの配列から点字フォーマットの文字列を作成
-  # @param [Array] tenji_blockを要素とする配列
-  def format_tenji(tenji_blocks)
-    lines = {
-      first: [],
-      second: [],
-      third: []
-    }
-    tenji_blocks.each do |tb|
-      lines[:first] << "#{tb[1]}#{tb[4]}"
-      lines[:second] << "#{tb[2]}#{tb[5]}"
-      lines[:third] << "#{tb[3]}#{tb[6]}"
-    end
-
-    <<~"TENJI".chomp
-      #{lines[:first].join(" ")}
-      #{lines[:second].join(" ")}
-      #{lines[:third].join(" ")}
-    TENJI
-  end
 end
