@@ -115,4 +115,76 @@ class TenjiMakerTest < Minitest::Test
       -- -- -- -- --
     TENJI
   end
+
+  def test_ya
+    tenji = @tenji_maker.to_tenji('YA')
+    assert_equal <<~TENJI.chomp, tenji
+      -o
+      --
+      o-
+    TENJI
+  end
+
+  def test_yu
+    tenji = @tenji_maker.to_tenji('YU')
+    assert_equal <<~TENJI.chomp, tenji
+      -o
+      --
+      oo
+    TENJI
+  end
+
+  def test_yo
+    tenji = @tenji_maker.to_tenji('YO')
+    assert_equal <<~TENJI.chomp, tenji
+      -o
+      -o
+      o-
+    TENJI
+  end
+
+  def test_ya_yu_yo
+    tenji = @tenji_maker.to_tenji('YA YU YO')
+    assert_equal <<~TENJI.chomp, tenji
+      -o -o -o
+      -- -- -o
+      o- oo o-
+    TENJI
+  end
+
+  def test_wa
+    tenji = @tenji_maker.to_tenji('WA')
+    assert_equal <<~TENJI.chomp, tenji
+      --
+      --
+      o-
+    TENJI
+  end
+
+  def test_wo
+    tenji = @tenji_maker.to_tenji('WO')
+    assert_equal <<~TENJI.chomp, tenji
+      --
+      -o
+      o-
+    TENJI
+  end
+
+  def test_n
+    tenji = @tenji_maker.to_tenji('N')
+    assert_equal <<~TENJI.chomp, tenji
+      --
+      -o
+      oo
+    TENJI
+  end
+
+  def test_wa_wo_n
+    tenji = @tenji_maker.to_tenji('WA WO N')
+    assert_equal <<~TENJI.chomp, tenji
+      -- -- --
+      -- -o -o
+      o- o- oo
+    TENJI
+  end
 end

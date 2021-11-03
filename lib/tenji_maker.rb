@@ -8,7 +8,7 @@ class TenjiMaker
       /(?<consonant>[KSTNHMYRW]|)(?<vowel>[AIUEO]|)/ =~ s
       initial_state = three_row_two_column
       consonant && assign_consonant(initial_state, consonant, vowel)
-      vowel && assign_vowel(initial_state, vowel)
+      vowel && assign_vowel(initial_state, consonant, vowel)
       result << initial_state
     end
     matrix_to_string(result)
@@ -52,31 +52,44 @@ class TenjiMaker
       initial_state[1][1] = DOT
       initial_state[2][1] = DOT
     when 'Y'
-      # TODO
+      initial_state[0][1] = DOT
     when 'R'
       initial_state[1][1] = DOT
     when 'W'
-      # TODO
+      # NOP
     end
   end
 
-  def assign_vowel(initial_state, vowel)
-    case vowel
-    when 'A'
-      initial_state[0][0] = DOT
-    when 'I'
-      initial_state[0][0] = DOT
-      initial_state[1][0] = DOT
-    when 'U'
-      initial_state[0][0] = DOT
-      initial_state[0][1] = DOT
-    when 'E'
-      initial_state[0][0] = DOT
-      initial_state[0][1] = DOT
-      initial_state[1][0] = DOT
-    when 'O'
-      initial_state[0][1] = DOT
-      initial_state[1][0] = DOT
+  def assign_vowel(initial_state, consonant, vowel)
+    if %w[W Y].include?(consonant)
+      case vowel
+      when 'A'
+        initial_state[2][0] = DOT
+      when 'U'
+        initial_state[2][0] = DOT
+        initial_state[2][1] = DOT
+      when 'O'
+        initial_state[1][1] = DOT
+        initial_state[2][0] = DOT
+      end
+    else
+      case vowel
+      when 'A'
+        initial_state[0][0] = DOT
+      when 'I'
+        initial_state[0][0] = DOT
+        initial_state[1][0] = DOT
+      when 'U'
+        initial_state[0][0] = DOT
+        initial_state[0][1] = DOT
+      when 'E'
+        initial_state[0][0] = DOT
+        initial_state[0][1] = DOT
+        initial_state[1][0] = DOT
+      when 'O'
+        initial_state[0][1] = DOT
+        initial_state[1][0] = DOT
+      end
     end
   end
 
