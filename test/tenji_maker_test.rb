@@ -62,5 +62,57 @@ class TenjiMakerTest < Minitest::Test
   end
   # ここから上のテストは変更不可 =====================
 
-  # 独自のテストパターンを追加するのは自由です
+  def test_a
+    tenji = @tenji_maker.to_tenji('A')
+    assert_equal <<~TENJI.chomp, tenji
+      o-
+      --
+      --
+    TENJI
+  end
+
+  def test_i
+    tenji = @tenji_maker.to_tenji('I')
+    assert_equal <<~TENJI.chomp, tenji
+      o-
+      o-
+      --
+    TENJI
+  end
+
+  def test_u
+    tenji = @tenji_maker.to_tenji('U')
+    assert_equal <<~TENJI.chomp, tenji
+      oo
+      --
+      --
+    TENJI
+  end
+
+  def test_e
+    tenji = @tenji_maker.to_tenji('E')
+    assert_equal <<~TENJI.chomp, tenji
+      oo
+      o-
+      --
+    TENJI
+  end
+
+  def test_o
+    tenji = @tenji_maker.to_tenji('O')
+    assert_equal <<~TENJI.chomp, tenji
+      -o
+      o-
+      --
+    TENJI
+  end
+
+  def test_a_i_u_e_o
+    tenji = @tenji_maker.to_tenji('A I U E O')
+    assert_equal <<~TENJI.chomp, tenji
+      o- o- oo oo -o
+      -- o- -- o- o-
+      -- -- -- -- --
+    TENJI
+  end
 end
