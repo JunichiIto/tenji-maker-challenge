@@ -61,6 +61,4 @@ class TenjiMakerTest < Minitest::Test
     TENJI
   end
   # ここから上のテストは変更不可 =====================
-
-  # 独自のテストパターンを追加するのは自由です
 end
