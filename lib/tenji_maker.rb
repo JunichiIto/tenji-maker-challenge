@@ -1,5 +1,6 @@
 class TenjiMaker
   LENGTH_TENJI_DOTS_AND_LINES_IN_ARRAY = 8
+  CONSONANTS_NEEDS_VOWEL_TENJI_INVERSE = ['Y', 'W']
 
   VOWELS = {
     A: <<~A.chomp,
@@ -70,6 +71,12 @@ class TenjiMaker
       oo
     M
 
+    Y: <<~Y.chomp,
+      -o
+      --
+      --
+    Y
+
     R: <<~R.chomp
       --
       -o
@@ -78,7 +85,11 @@ class TenjiMaker
   }
 
   def to_tenji(text)
+    vowel_tenji_inverse_flag = false
+
     alphabet_letter_tenjis = text.split(//).map do |letter|
+      vowel_tenji_inverse_flag = true unless CONSONANTS_NEEDS_VOWEL_TENJI_INVERSE.grep(letter).empty?
+
       if VOWELS.has_key?(letter.to_sym)
         VOWELS[letter.to_sym]
       elsif CONSONANTS.has_key?(letter.to_sym)
@@ -86,7 +97,18 @@ class TenjiMaker
       end
     end
 
+    alphabet_letter_tenjis.compact!
+    alphabet_letter_tenjis = vowel_tenji_inverse(alphabet_letter_tenjis) if vowel_tenji_inverse_flag
     japanese_letter_tenji = compound_vowel_and_consonant_tenji(alphabet_letter_tenjis)
+  end
+
+  def vowel_tenji_inverse(alphabet_letter_tenjis)
+    alphabet_letter_tenjis.map! do |alphabet_letter_tenji|
+
+      next alphabet_letter_tenji unless VOWELS.value?(alphabet_letter_tenji)
+
+      alphabet_letter_tenji[6] + alphabet_letter_tenji[7] + alphabet_letter_tenji[2..5] + alphabet_letter_tenji[0] + alphabet_letter_tenji[1]
+    end
   end
 
   def compound_vowel_and_consonant_tenji(alphabet_letter_tenjis)
