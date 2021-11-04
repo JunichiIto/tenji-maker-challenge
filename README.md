@@ -1,5 +1,5 @@
 # tenji-maker-challenge
-Qiita Advent Calendar 2021の特別企画、「Rubyプログラミング問題にチャレンジ！ －改訂版・チェリー本発売記念－」の提出用リポジトリです。
+Qiita Advent Calendar 2021の特別企画、「[Rubyプログラミング問題にチャレンジ！ －改訂版・チェリー本発売記念－](https://qiita.com/advent-calendar/2021/ruby-challenge)」の提出用リポジトリです。
 
 このアドベントカレンダー企画に参加される方はこのリポジトリをフォークし、自分の書いたコードでプルリクエストを作成してください。
 
