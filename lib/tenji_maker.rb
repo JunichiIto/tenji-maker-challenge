@@ -85,21 +85,50 @@ class TenjiMaker
   }
 
   def to_tenji(text)
-    vowel_tenji_inverse_flag = false
+    continuity_dots_and_lines = continuity_dots_and_lines_build(text)
+    format_to_tenji(continuity_dots_and_lines)
+  end
 
-    alphabet_letter_tenjis = text.split(//).map do |letter|
-      vowel_tenji_inverse_flag = true unless CONSONANTS_NEEDS_VOWEL_TENJI_INVERSE.grep(letter).empty?
+  private
 
-      if VOWELS.has_key?(letter.to_sym)
-        VOWELS[letter.to_sym]
-      elsif CONSONANTS.has_key?(letter.to_sym)
-        CONSONANTS[letter.to_sym]
+  def continuity_dots_and_lines_build(text)
+    text.split(' ').map do |romanisation_japanese_letter|
+      vowel_tenji_inverse_flag = false
+
+      alphabet_letter_tenjis = romanisation_japanese_letter.split(//).map do |letter|
+        vowel_tenji_inverse_flag = true unless CONSONANTS_NEEDS_VOWEL_TENJI_INVERSE.grep(letter).empty?
+
+        if VOWELS.has_key?(letter.to_sym)
+          VOWELS[letter.to_sym]
+        elsif CONSONANTS.has_key?(letter.to_sym)
+          CONSONANTS[letter.to_sym]
+        end
+      end
+
+      alphabet_letter_tenjis.compact!
+      alphabet_letter_tenjis = vowel_tenji_inverse(alphabet_letter_tenjis) if vowel_tenji_inverse_flag
+      japanese_letter_tenji = compound_vowel_and_consonant_tenji(alphabet_letter_tenjis)
+    end
+  end
+
+  def format_to_tenji(continuity_dots_and_lines)
+    tenji = ["\n", "\n"]
+
+    continuity_dots_and_lines.each_with_index do |continuity_dot_and_line, i|
+      dots_and_lines = continuity_dot_and_line.split(//)
+
+      if continuity_dots_and_lines.size - 1 != i
+        tenji.insert((i)*3, dots_and_lines[0], dots_and_lines[1], "\ ")
+        tenji.insert((i)*6+4, dots_and_lines[3], dots_and_lines[4], "\ ")
+        tenji.insert((i)*9+8, dots_and_lines[6], dots_and_lines[7], "\ ")
+      else
+        tenji.insert((i)*3, dots_and_lines[0], dots_and_lines[1])
+        tenji.insert((i)*6+3, dots_and_lines[3], dots_and_lines[4])
+        tenji.insert((i)*9+6, dots_and_lines[6], dots_and_lines[7])
       end
     end
 
-    alphabet_letter_tenjis.compact!
-    alphabet_letter_tenjis = vowel_tenji_inverse(alphabet_letter_tenjis) if vowel_tenji_inverse_flag
-    japanese_letter_tenji = compound_vowel_and_consonant_tenji(alphabet_letter_tenjis)
+    tenji.join
   end
 
   def vowel_tenji_inverse(alphabet_letter_tenjis)
