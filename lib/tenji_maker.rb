@@ -40,11 +40,7 @@ class TenjiMaker
   def conversion(text_array)
     text_array.map do |first, second|
       second ||= first
-      if SPECIAL_LETTERS.key?(first + second)
-        SPECIAL_LETTERS[first + second]
-      else
-        NORMAL_LETTERS[first] | NORMAL_LETTERS[second]
-      end
+      SPECIAL_LETTERS[first + second] || (NORMAL_LETTERS[first] | NORMAL_LETTERS[second])
     end
   end
 end
