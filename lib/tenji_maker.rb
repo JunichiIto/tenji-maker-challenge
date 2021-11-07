@@ -29,12 +29,12 @@ class TenjiMaker
     text_array = text.split.map(&:chars)
     braille_array = conversion(text_array).map do |element|
       braille_letter = +'------'
-      element.each do |n|
-        braille_letter[n] = 'o'
+      element.each do |number|
+        braille_letter[number] = 'o'
       end
       braille_letter.scan(/.{1,2}/)
     end
-    braille_array.transpose.map { |a| a.join(' ') }.join("\n")
+    braille_array.transpose.map { |two_degits| two_degits.join(' ') }.join("\n")
   end
 
   def conversion(text_array)
