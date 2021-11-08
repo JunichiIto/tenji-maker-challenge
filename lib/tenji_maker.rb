@@ -18,34 +18,40 @@ class TenjiMaker
   }.freeze
 
   SPECIAL_LETTERS = {
-    'WA' => [4],
     'YA' => [1, 4],
     'YU' => [1, 4, 5],
     'YO' => [1, 3, 4],
+    'WA' => [4],
     'NN' => [3, 4, 5]
   }.freeze
 
   def to_tenji(text)
     text_array = text.split.map(&:chars)
-    braille_array = conversion(text_array).map do |element|
-      braille_letter = +'------'
-      element.each do |number|
-        braille_letter[number] = 'o'
-      end
-      braille_letter.scan(/.{1,2}/)
+    braille_array = convert(text_array).map do |element|
+      @braille_letter = +'------'
+      make_braille(element)
+      @braille_letter.scan(/.{1,2}/)
     end
     braille_array.transpose.map { |two_degits| two_degits.join(' ') }.join("\n")
   end
 
-  def conversion(text_array)
+  private
+
+  def convert(text_array)
     text_array.map do |first, second|
       second ||= first
       SPECIAL_LETTERS[first + second] || (NORMAL_LETTERS[first] | NORMAL_LETTERS[second])
     end
   end
+
+  def make_braille(element)
+    element.each do |number|
+      @braille_letter[number] = 'o'
+    end
+  end
 end
 
 if __FILE__ == $PROGRAM_NAME
-  input = ARGV[0]
-  puts TenjiMaker.new.to_tenji(input)
+  text = ARGV[0]
+  puts TenjiMaker.new.to_tenji(text)
 end
