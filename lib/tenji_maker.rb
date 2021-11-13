@@ -81,7 +81,7 @@ class TenjiMaker
       tenji_col = tenji_col.map{|col| col << 1}
 
       # 1行分の点字文字列を改行コードをつけて結合する
-      tenji += tenji_row+"\r\n"
+      tenji += tenji_row.rstrip()+"\n"
     end
 
     # 点字データを一連の文字列にして返却
