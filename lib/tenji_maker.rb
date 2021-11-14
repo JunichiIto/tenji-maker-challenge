@@ -95,10 +95,11 @@ class TenjiMaker
         vowel[1] = 'o' if index == 2
       end
     when 'Y'
+      except_u = lists[0][0] == lists[0][1]
       lists.map.with_index(1) do |vowel, index|
         vowel[0..1] = ['-','o'] if index == 1
         vowel[0..1] = ['-','o'] if index == 2 && vowel.first == 'o'
-        if index == 3 && vowel[0] == 'o' && vowel[1] == 'o'
+        if index == 3 && except_u
           vowel[0..1] = ['o','o']
         elsif index == 3
           vowel[0..1] = ['o','-']
