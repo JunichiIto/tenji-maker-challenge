@@ -59,7 +59,7 @@ class TenjiMaker
       end
     end
 
-    # 点字リストを点字に変換して返却
+    # 点字リストを点字文字列に変換して返却
     return tenji_list_to_string(tenji_list) 
   end
 
@@ -77,19 +77,14 @@ class TenjiMaker
         tenji_row += @tenji_sep
       end
 
-      # マスクをシフトして次のドットを抽出する
-      tenji_col = tenji_col.map{|col| col << 1}
-
       # 1行分の点字文字列を改行コードをつけて結合する
       tenji += tenji_row.rstrip()+"\n"
+
+      # マスクをシフトして次のドットを抽出する
+      tenji_col = tenji_col.map{|col| col << 1}
     end
 
     # 点字データを一連の文字列にして返却
     return tenji.chomp()
   end
-end
-
-if __FILE__ == $0
-  t = TenjiMaker.new()
-  puts t.to_tenji('A KA SA TA NA')
 end
