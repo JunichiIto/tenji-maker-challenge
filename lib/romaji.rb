@@ -23,7 +23,7 @@ class Romaji
     length >= 2 ? char[0..-2] : ''
   end
 
-  # ローマ字を引数に点字情報をHashに格納する
+  # ローマ字から点字情報を作成する
   # @param [Romaji] ローマ字('HA', 'N', etc..)
   # @return [Hash]
   # e.g.) ti(ち)の場合
