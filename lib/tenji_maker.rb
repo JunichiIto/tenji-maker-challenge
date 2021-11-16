@@ -1,36 +1,35 @@
-require 'tenji_block'
 require 'romaji'
 
 class TenjiMaker
-  # 点字関連の定数
-  include TenjiBlock
 
   def to_tenji(text)
-    # 各行に出力する点字情報を記録するHash
-    lines = {
-      first: [],
-      second: [],
-      third: []
-    }
 
-    text.split.map do |char|
-      # ローマ字から点字ブロックの情報を取得
-      r = Romaji.new(char)
-      tb = TenjiBlock.generate(r)
-
-      # ブロック情報から各行に出力する点字情報を保持
-      lines[:first]  << "#{tb[1]}#{tb[4]}"
-      lines[:second] << "#{tb[2]}#{tb[5]}"
-      lines[:third]  << "#{tb[3]}#{tb[6]}"
+    # ローマ字から点字ブロックの情報を取得
+    tenji_blocks = text.split.map do |char|
+      Romaji.new(char).tenji_block
     end
 
-    # 各行の点字情報を空白で区切る
-    # ['o-', 'o-', 'o-'] => 'o- o- o-'
-    each_line_texts = lines.values.map{|text| text.join(" ")}
+    # 点字ブロックの情報から出力フォーマットを形成
+    fromat_tenji(tenji_blocks)
+  end
 
-    # 各行の点字情報を改行コードで区切って結合
-    # ['o- o- o-', 'o- -- --', 'oo -- o-']
-    # => "o- o- o-\no- -- --\noo -- o-"
-    each_line_texts.join("\n")
+  private
+
+  # 点字ブロックの情報から出力フォーマットを形成
+  def fromat_tenji(tenji_blocks)
+    first, second, third = [[], [], []]
+
+    # ブロック情報から各行に出力する点字情報を保持
+    tenji_blocks.each do |tb|
+      first  << "#{tb[1]}#{tb[4]}"
+      second << "#{tb[2]}#{tb[5]}"
+      third  << "#{tb[3]}#{tb[6]}"
+    end
+
+    <<~"TENJI".chomp
+    #{first.join(" ")}
+    #{second.join(" ")}
+    #{third.join(" ")}
+    TENJI
   end
 end
