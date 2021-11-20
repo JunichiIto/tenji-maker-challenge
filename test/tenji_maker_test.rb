@@ -76,6 +76,16 @@ class TenjiMakerTest < Minitest::Test
     TENJI
   end
 
+  # わゐゆゑを
+  def test_vowel_down
+    tenji = @tenji_maker.to_tenji('WA WI YU WE WO')
+    assert_equal <<~TENJI.chomp, tenji
+      -- -- -o -- --
+      -- o- -- oo -o
+      o- o- oo o- o-
+    TENJI
+  end
+
   # がじづべぽ
   def test_voiced
     tenji = @tenji_maker.to_tenji('GA ZI DU BE PO')
@@ -96,13 +106,13 @@ class TenjiMakerTest < Minitest::Test
     TENJI
   end
 
-  # ぎゅじょぢゃびゅぴょくぁつぃふぇぐぁヴィ
+  # ぎゅじょぢゃびゅぴょくぁうぉつぃふぇぐぁヴィ
   def test_contracted_2 # 拗音
-    tenji = @tenji_maker.to_tenji('GYU ZYO DYA BYU PYO KWA TSI FE GWA VI')
+    tenji = @tenji_maker.to_tenji('GYU ZYO DYA BYU PYO KWA WHO TSI FE GWA VI')
     assert_equal <<~TENJI.chomp, tenji
-      -o oo -o -o -o o- -o oo -o -o -- o- -- o- -- oo -- o- -- o-
-      -o -- -o oo -o -o -o -- -- o- o- -- o- oo o- o- oo -- oo o-
-      -- -o -- -o -- o- -- oo -o oo -o -o -o o- -o oo -o -o -o oo
+      -o oo -o -o -o o- -o oo -o -o -- o- -- -o -- o- -- oo -- o- -- o-
+      -o -- -o oo -o -o -o -- -- o- o- -- o- o- o- oo o- o- oo -- oo o-
+      -- -o -- -o -- o- -- oo -o oo -o -o -o -- -o o- -o oo -o -o -o oo
     TENJI
   end
 
