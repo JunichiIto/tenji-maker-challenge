@@ -39,7 +39,7 @@ class TenjiMaker
             if c == ' '
             elsif c == '-'
                 raise '子音(%s)の後に長音を挿入しようとしました'%current_consonant if !current_consonant.empty?
-                codes << Dash
+                codes.push(Dash)
             elsif Vowels.include?(c)
                 if ['Y', 'W'].include?(current_consonant)
                     vowel_code = VowelsDown[c]
@@ -47,22 +47,22 @@ class TenjiMaker
                     vowel_code = Vowels[c]
                 end
                 consonant_code = Consonants[current_consonant]
-                codes += consonant_code[0...-1] + [consonant_code[-1] | vowel_code]
+                codes.concat(consonant_code[0...-1] + [consonant_code[-1] | vowel_code])
                 current_consonant = ''
             else
                 if current_consonant[-1] == c
                     raise '複数のローマ字からなる子音(%s)の後に促音を挿入しようとしました'%current_consonant if current_consonant.size > 1
                     if current_consonant == 'N'
-                        codes << N
+                        codes.push(N)
                         current_consonant = ''
                     else
-                        codes << T
+                        codes.push(T)
                     end
                 else
                     current_consonant += c
                     if !Consonants.include?(current_consonant)
                         raise '予期せぬ子音(%s)が入力されました'%current_consonant if current_consonant[0]!='N'
-                        codes << N
+                        codes.push(N)
                         current_consonant = current_consonant[1..-1]
                     end
                 end
@@ -70,7 +70,7 @@ class TenjiMaker
         }
         if !current_consonant.empty?
             raise '文字列が子音で終端しています(%s)'%current_consonant if current_consonant != 'N'
-            codes << N
+            codes.push(N)
         end
         codes
     end
