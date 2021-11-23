@@ -1,10 +1,10 @@
 require 'minitest/autorun'
-require_relative '../lib/tenji_boin'
+require_relative '../lib/tenji_single_char'
 
 # 点字母音の生成テスト
-class TenjiBoinTest < Minitest::Test
+class TenjiSingleCharTest < Minitest::Test
   def setup
-    @tenji_boin = TenjiBoin.new
+    @tenji_boin = TenjiSingleChar.new
   end
 
   def test_a
@@ -49,6 +49,15 @@ class TenjiBoinTest < Minitest::Test
       -o
       o-
       --
+    TENJI
+  end
+
+  def test_n
+    tenji = @tenji_boin.to_tenji_boin_array('N')
+    assert_equal <<~TENJI.chomp, @tenji_boin.show_tenji(tenji)
+      --
+      -o
+      oo
     TENJI
   end
 end

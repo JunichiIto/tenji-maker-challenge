@@ -1,6 +1,6 @@
 require_relative '../lib/tenji_handler'
 
-class TenjiBoin
+class TenjiSingleChar
   include TenjiHandler
 
   def to_tenji_boin_array(char)
@@ -21,6 +21,10 @@ class TenjiBoin
       template[0][1] = 'o'
       template[1][0] = 'o'
       template
+    when 'N'
+      # Eの配列を上下反転、左右反転させる
+      # https://mebee.info/2020/12/15/post-23548/
+      to_tenji_boin_array('E').reverse.map(&:reverse)
     end
   end
 end
