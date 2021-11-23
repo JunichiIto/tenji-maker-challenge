@@ -1,15 +1,15 @@
 require 'minitest/autorun'
-require_relative '../lib/tenji_maker'
+require_relative '../lib/tenji_boin'
 
+# 点字母音の生成テスト
 class TenjiBoinTest < Minitest::Test
   def setup
-    @tenji_maker = TenjiMaker.new
+    @tenji_boin = TenjiBoin.new
   end
 
-  # 母音が正しく生成できるか
   def test_a
-    tenji = @tenji_maker.to_tenji('A')
-    assert_equal <<~TENJI.chomp, tenji
+    tenji = @tenji_boin.to_tenji_boin_array('A')
+    assert_equal <<~TENJI.chomp, @tenji_boin.show_tenji(tenji)
       o-
       --
       --
@@ -17,8 +17,8 @@ class TenjiBoinTest < Minitest::Test
   end
 
   def test_i
-    tenji = @tenji_maker.to_tenji('I')
-    assert_equal <<~TENJI.chomp, tenji
+    tenji = @tenji_boin.to_tenji_boin_array('I')
+    assert_equal <<~TENJI.chomp, @tenji_boin.show_tenji(tenji)
       o-
       o-
       --
@@ -26,8 +26,8 @@ class TenjiBoinTest < Minitest::Test
   end
 
   def test_u
-    tenji = @tenji_maker.to_tenji('U')
-    assert_equal <<~TENJI.chomp, tenji
+    tenji = @tenji_boin.to_tenji_boin_array('U')
+    assert_equal <<~TENJI.chomp, @tenji_boin.show_tenji(tenji)
       oo
       --
       --
@@ -35,8 +35,8 @@ class TenjiBoinTest < Minitest::Test
   end
 
   def test_e
-    tenji = @tenji_maker.to_tenji('E')
-    assert_equal <<~TENJI.chomp, tenji
+    tenji = @tenji_boin.to_tenji_boin_array('E')
+    assert_equal <<~TENJI.chomp, @tenji_boin.show_tenji(tenji)
       oo
       o-
       --
@@ -44,8 +44,8 @@ class TenjiBoinTest < Minitest::Test
   end
 
   def test_o
-    tenji = @tenji_maker.to_tenji('O')
-    assert_equal <<~TENJI.chomp, tenji
+    tenji = @tenji_boin.to_tenji_boin_array('O')
+    assert_equal <<~TENJI.chomp, @tenji_boin.show_tenji(tenji)
       -o
       o-
       --
