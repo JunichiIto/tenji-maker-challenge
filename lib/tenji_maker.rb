@@ -1,5 +1,6 @@
 class TenjiMaker
   LENGTH_TENJI_DOTS_AND_LINES_IN_ARRAY = 8
+  MAXIMUM_TIMES_SHIFT_DOWNWARD = 2
   CONSONANTS_NEEDS_VOWEL_TENJI_INVERSE = ['Y', 'W']
 
   VOWELS = {
@@ -106,7 +107,7 @@ class TenjiMaker
       end
 
       alphabet_letter_tenjis.compact!
-      alphabet_letter_tenjis = vowel_tenji_inverse(alphabet_letter_tenjis) if vowel_tenji_inverse_flag
+      alphabet_letter_tenjis = vowel_tenji_slide_bottom(alphabet_letter_tenjis) if vowel_tenji_inverse_flag
       japanese_letter_tenji = compound_vowel_and_consonant_tenji(alphabet_letter_tenjis)
     end
   end
@@ -131,12 +132,20 @@ class TenjiMaker
     tenji.join
   end
 
-  def vowel_tenji_inverse(alphabet_letter_tenjis)
+  def vowel_tenji_slide_bottom(alphabet_letter_tenjis)
     alphabet_letter_tenjis.map! do |alphabet_letter_tenji|
 
       next alphabet_letter_tenji unless VOWELS.value?(alphabet_letter_tenji)
 
-      alphabet_letter_tenji[6] + alphabet_letter_tenji[7] + alphabet_letter_tenji[2..5] + alphabet_letter_tenji[0] + alphabet_letter_tenji[1]
+      slided_alphabet_letter_tenji = ''
+      MAXIMUM_TIMES_SHIFT_DOWNWARD.times do
+        slided_alphabet_letter_tenji = "--\n" + alphabet_letter_tenji[0] + alphabet_letter_tenji[1] + "\n" + alphabet_letter_tenji[3] + alphabet_letter_tenji[4]
+        break slided_alphabet_letter_tenji if slided_alphabet_letter_tenji[6] == 'o'
+
+        alphabet_letter_tenji = slided_alphabet_letter_tenji
+      end
+
+      slided_alphabet_letter_tenji
     end
   end
 
