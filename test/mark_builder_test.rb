@@ -19,16 +19,6 @@ class MarkBuilderTest < Minitest::Test
     TENJI
   end
 
-  def test_build_tenjis_HI_YO_KO
-    tenjis = build_tenjis('HI YO KO')
-
-    assert_equal <<~TENJI.chomp, @builder.builds(tenjis)
-      o- -o -o
-      o- -o o-
-      oo o- -o
-    TENJI
-  end
-
   private
 
   def build_tenjis(string)
