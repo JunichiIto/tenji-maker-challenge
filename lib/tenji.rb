@@ -3,13 +3,13 @@
 class Tenji
   attr_reader :squares
 
-  def initialize(string)
-    if exception_string?(string)
-      @squares = EXCEPTION_LIST[string]
+  def initialize(roman_alphabet)
+    if exception_roman_alphabet?(roman_alphabet)
+      @squares = EXCEPTION_LIST[roman_alphabet]
       return
     end
 
-    @chars = string.chars
+    @chars = roman_alphabet.chars
     @squares = []
     squares << build_squares_vowel
     squares << build_squares_consonant
@@ -21,8 +21,8 @@ class Tenji
 
   attr_reader :chars
 
-  def exception_string?(string)
-    EXCEPTION_LIST.keys.find { |char, _| char == string }
+  def exception_roman_alphabet?(roman_alphabet)
+    EXCEPTION_LIST.keys.find { |char, _| char == roman_alphabet }
   end
 
   def build_squares_vowel
@@ -31,8 +31,8 @@ class Tenji
   end
 
   def build_squares_consonant
-    string_with_consonant = chars.length == 2
-    return [] unless string_with_consonant
+    roman_alphabet_with_consonant = chars.length == 2
+    return [] unless roman_alphabet_with_consonant
 
     consonant = chars.first
     CONSONAT_LIST[consonant]
