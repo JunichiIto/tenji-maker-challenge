@@ -1,5 +1,5 @@
 class TenjiMaker
-  LENGTH_TENJI_DOTS_AND_LINES_IN_ARRAY = 8
+  LENGTH_OF_DOTS_AND_LINES_TO_TENJI = 8
   MAXIMUM_TIMES_SHIFT_DOWNWARD = 2
   CONSONANTS_NEEDS_VOWEL_TENJI_INVERSE = ['Y', 'W']
   ROMANISATION_JAPANESE_LETTER_MEANS_N = ['N', 'NN']
@@ -93,13 +93,13 @@ class TenjiMaker
   TENJI_N_OR_NN
 
   def to_tenji(text)
-    continuity_dots_and_lines = continuity_dots_and_lines_build(text)
-    format_to_tenji(continuity_dots_and_lines)
+    dots_and_lines_made_from_letters = dots_and_lines_build(text)
+    format_to_tenji(dots_and_lines_made_from_letters)
   end
 
   private
 
-  def continuity_dots_and_lines_build(text)
+  def dots_and_lines_build(text)
     text.split(' ').map do |romanisation_japanese_letter|
       vowel_tenji_inverse_flag = false
 
@@ -107,7 +107,7 @@ class TenjiMaker
         next TENJI_N_OR_NN
       end
 
-      alphabet_letter_tenjis = romanisation_japanese_letter.split(//).map do |letter|
+      dots_and_lines_made_from_alphabet_letters = romanisation_japanese_letter.split(//).map do |letter|
         vowel_tenji_inverse_flag = true if CONSONANTS_NEEDS_VOWEL_TENJI_INVERSE.include?(letter)
 
         if VOWELS.has_key?(letter.to_sym)
@@ -117,19 +117,19 @@ class TenjiMaker
         end
       end
 
-      alphabet_letter_tenjis.compact!
-      alphabet_letter_tenjis = vowel_tenji_slide_bottom(alphabet_letter_tenjis) if vowel_tenji_inverse_flag
-      japanese_letter_tenji = compound_vowel_and_consonant_tenji(alphabet_letter_tenjis)
+      dots_and_lines_made_from_alphabet_letters.compact!
+      dots_and_lines_made_from_alphabet_letters = vowel_dots_and_lines_slide_bottom(dots_and_lines_made_from_alphabet_letters) if vowel_tenji_inverse_flag
+      compound_vowel_and_consonant_dots_and_lines(dots_and_lines_made_from_alphabet_letters)
     end
   end
 
-  def format_to_tenji(continuity_dots_and_lines)
+  def format_to_tenji(dots_and_lines_made_from_letters)
     tenji = ["\n", "\n"]
 
-    continuity_dots_and_lines.each_with_index do |continuity_dot_and_line, i|
-      dots_and_lines = continuity_dot_and_line.split(//)
+    dots_and_lines_made_from_letters.each_with_index do |dots_and_lines_made_from_letter, i|
+      dots_and_lines = dots_and_lines_made_from_letter.split(//)
 
-      if continuity_dots_and_lines.size - 1 != i
+      if dots_and_lines_made_from_letters.size - 1 != i
         tenji.insert((i)*3, dots_and_lines[0], dots_and_lines[1], "\ ")
         tenji.insert((i)*6+4, dots_and_lines[3], dots_and_lines[4], "\ ")
         tenji.insert((i)*9+8, dots_and_lines[6], dots_and_lines[7], "\ ")
@@ -143,43 +143,43 @@ class TenjiMaker
     tenji.join
   end
 
-  def vowel_tenji_slide_bottom(alphabet_letter_tenjis)
-    alphabet_letter_tenjis.map! do |alphabet_letter_tenji|
+  def vowel_dots_and_lines_slide_bottom(dots_and_lines_made_from_alphabet_letters)
+    dots_and_lines_made_from_alphabet_letters.map! do |dots_and_lines_made_from_alphabet_letter|
 
-      next alphabet_letter_tenji unless VOWELS.value?(alphabet_letter_tenji)
+      next dots_and_lines_made_from_alphabet_letter unless VOWELS.value?(dots_and_lines_made_from_alphabet_letter)
 
-      slided_alphabet_letter_tenji = ''
+      slided_dots_and_lines_made_from_alphabet_letter = ''
       MAXIMUM_TIMES_SHIFT_DOWNWARD.times do
-        slided_alphabet_letter_tenji = "--\n" + alphabet_letter_tenji[0] + alphabet_letter_tenji[1] + "\n" + alphabet_letter_tenji[3] + alphabet_letter_tenji[4]
-        break slided_alphabet_letter_tenji if slided_alphabet_letter_tenji[6] == 'o'
+        slided_dots_and_lines_made_from_alphabet_letter = "--\n" + dots_and_lines_made_from_alphabet_letter[0] + dots_and_lines_made_from_alphabet_letter[1] + "\n" + dots_and_lines_made_from_alphabet_letter[3] + dots_and_lines_made_from_alphabet_letter[4]
+        break slided_dots_and_lines_made_from_alphabet_letter if slided_dots_and_lines_made_from_alphabet_letter[6] == 'o'
 
-        alphabet_letter_tenji = slided_alphabet_letter_tenji
+        dots_and_lines_made_from_alphabet_letter = slided_dots_and_lines_made_from_alphabet_letter
       end
 
-      slided_alphabet_letter_tenji
+      slided_dots_and_lines_made_from_alphabet_letter
     end
   end
 
-  def compound_vowel_and_consonant_tenji(alphabet_letter_tenjis)
-    return alphabet_letter_tenjis[0] if alphabet_letter_tenjis[1].nil?
+  def compound_vowel_and_consonant_dots_and_lines(dots_and_lines_made_from_alphabet_letters)
+    return dots_and_lines_made_from_alphabet_letters[0] if dots_and_lines_made_from_alphabet_letters[1].nil?
 
-    alphabet_letter_tenji_dots_and_lines = alphabet_letter_tenjis.map { |alphabet_letter_tenji| alphabet_letter_tenji.split(//) }
+    dismantled_dots_and_lines_made_from_alphabet_letters = dots_and_lines_made_from_alphabet_letters.map { |dots_and_lines_made_from_alphabet_letter| dots_and_lines_made_from_alphabet_letter.split(//) }
 
-    consonant_tenji_dots_and_lines = alphabet_letter_tenji_dots_and_lines[0]
-    vowel_tenji_dots_and_lines = alphabet_letter_tenji_dots_and_lines[1]
+    dismantled_consolnant_dots_and_lines = dismantled_dots_and_lines_made_from_alphabet_letters[0]
+    dismantled_vowel_dots_and_lines = dismantled_dots_and_lines_made_from_alphabet_letters[1]
 
-    japanese_letter_tenji_dots_and_lines = []
+    dots_and_lines_to_make_tenji = []
     
-    LENGTH_TENJI_DOTS_AND_LINES_IN_ARRAY.times do |num|
-      japanese_letter_tenji_dots_and_lines[num] = compound_each_dot_or_line(consonant_tenji_dots_and_lines[num], vowel_tenji_dots_and_lines[num])
+    LENGTH_OF_DOTS_AND_LINES_TO_TENJI.times do |num|
+      dots_and_lines_to_make_tenji[num] = compound_each_dot_or_line(dismantled_consolnant_dots_and_lines[num], dismantled_vowel_dots_and_lines[num])
     end
 
-    return japanese_letter_tenji_dots_and_lines.join
+    return dots_and_lines_to_make_tenji.join
   end
 
-  def compound_each_dot_or_line(consonant_tenji_dot_or_line, vowel_tenji_dot_or_line)
-    return consonant_tenji_dot_or_line if consonant_tenji_dot_or_line == vowel_tenji_dot_or_line
+  def compound_each_dot_or_line(dismantled_consolnant_dots_and_lines, dismantled_vowel_dots_and_lines)
+    return dismantled_consolnant_dots_and_lines if dismantled_consolnant_dots_and_lines == dismantled_vowel_dots_and_lines
 
-    return 'o'
+    'o'
   end
 end
