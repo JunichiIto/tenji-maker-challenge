@@ -69,4 +69,13 @@ class TenjiMakerTest < Minitest::Test
       o- -o -o
     TENJI
   end
+
+  def test_ki_ri_nn
+    tenji = @tenji_maker.to_tenji('KI RI NN')
+    assert_equal <<~TENJI.chomp, tenji
+      o- o- --
+      o- oo -o
+      -o -- oo
+    TENJI
+  end
 end

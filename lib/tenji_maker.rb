@@ -2,6 +2,7 @@ class TenjiMaker
   LENGTH_TENJI_DOTS_AND_LINES_IN_ARRAY = 8
   MAXIMUM_TIMES_SHIFT_DOWNWARD = 2
   CONSONANTS_NEEDS_VOWEL_TENJI_INVERSE = ['Y', 'W']
+  ROMANISATION_JAPANESE_LETTER_MEANS_N = ['N', 'NN']
 
   VOWELS = {
     A: <<~A.chomp,
@@ -85,6 +86,12 @@ class TenjiMaker
     R
   }
 
+  TENJI_N_OR_NN = <<~TENJI_N_OR_NN.chomp
+    --
+    -o
+    oo
+  TENJI_N_OR_NN
+
   def to_tenji(text)
     continuity_dots_and_lines = continuity_dots_and_lines_build(text)
     format_to_tenji(continuity_dots_and_lines)
@@ -95,6 +102,10 @@ class TenjiMaker
   def continuity_dots_and_lines_build(text)
     text.split(' ').map do |romanisation_japanese_letter|
       vowel_tenji_inverse_flag = false
+
+      unless ROMANISATION_JAPANESE_LETTER_MEANS_N.grep(romanisation_japanese_letter).empty?
+        next TENJI_N_OR_NN
+      end
 
       alphabet_letter_tenjis = romanisation_japanese_letter.split(//).map do |letter|
         vowel_tenji_inverse_flag = true unless CONSONANTS_NEEDS_VOWEL_TENJI_INVERSE.grep(letter).empty?
