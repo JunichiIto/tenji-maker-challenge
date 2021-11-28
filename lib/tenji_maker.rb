@@ -103,12 +103,12 @@ class TenjiMaker
     text.split(' ').map do |romanisation_japanese_letter|
       vowel_tenji_inverse_flag = false
 
-      unless ROMANISATION_JAPANESE_LETTER_MEANS_N.grep(romanisation_japanese_letter).empty?
+      if ROMANISATION_JAPANESE_LETTER_MEANS_N.include?(romanisation_japanese_letter)
         next TENJI_N_OR_NN
       end
 
       alphabet_letter_tenjis = romanisation_japanese_letter.split(//).map do |letter|
-        vowel_tenji_inverse_flag = true unless CONSONANTS_NEEDS_VOWEL_TENJI_INVERSE.grep(letter).empty?
+        vowel_tenji_inverse_flag = true if CONSONANTS_NEEDS_VOWEL_TENJI_INVERSE.include?(letter)
 
         if VOWELS.has_key?(letter.to_sym)
           VOWELS[letter.to_sym]
