@@ -9,7 +9,7 @@ module TenjiHandler
         f.inject { |result, row| 
                 merge_tenji_row(result, row) 
         }
-     }
+    }
   end
 
   def merge_tenji_row(row_a, row_b)
