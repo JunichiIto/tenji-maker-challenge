@@ -10,18 +10,18 @@ class TenjiCharGenerator
     @tenji_double = TenjiDoubleChar.new
   end
 
-  def to_tenji(source_string)
-    tenji_single_array = @tenji_single.to_tenji_single_array(source_string[-1])
-    return show_tenji(tenji_single_array) if source_string.length == 1
+  def to_tenji_char(romaji_char)
+    tenji_single_array = @tenji_single.to_tenji_single_array(romaji_char[-1])
+    return tenji_single_array if romaji_char.length == 1
 
-    tenji_double_array = @tenji_double.to_tenji_double_array(source_string[0])
-    case source_string
+    tenji_double_array = @tenji_double.to_tenji_double_array(romaji_char[0])
+    case romaji_char
     when "YA", "YU", "WA" then
-      show_tenji(merge_tenji_array(tenji_double_array, tenji_single_array.reverse))
+      merge_tenji_array(tenji_double_array, tenji_single_array.reverse)
     when "YO" then
-      show_tenji(merge_tenji_array(tenji_double_array, tenji_single_array.rotate(-1)))
+      merge_tenji_array(tenji_double_array, tenji_single_array.rotate(-1))
     else
-      show_tenji(merge_tenji_array(tenji_double_array, tenji_single_array))
+      merge_tenji_array(tenji_double_array, tenji_single_array)
     end
   end
 end
