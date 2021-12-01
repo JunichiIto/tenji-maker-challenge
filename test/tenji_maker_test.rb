@@ -69,8 +69,8 @@ class TenjiMakerTest < Minitest::Test
     # 鳥鳴く声す 夢覚ませ 見よ明け渡る 東(を) 空色映えて 沖つ辺に 帆舟群れ居ぬ 靄の内
     tenji = @tenji_maker.to_tenji('TO RI NA KU KO E SU YU ME SA MA SE MI YO A KE WA TA RU HI N KA SI SO RA I RO HA E TE O KI TU HE NI HO HU NE MU RE I NU MO YA NO U TI')
     assert_equal <<~TENJI.chomp, tenji
-      -o oo o- oo -o oo oo -o oo o- o- oo o- -o o- oo -- o- oo o- -- o- o- -o o- o- -o o- oo oo -o o- oo oo o- -o oo oo oo oo o- oo -o -o -o oo o-
-      oo o- -- -- o- o- -o -- oo -o -o oo oo -o -- o- -- -o -o o- -o -- oo oo -o o- oo -- o- oo o- o- -o o- o- o- -- o- -o oo o- -- oo -- o- -- oo
+      -o o- o- oo -o oo oo -o oo o- o- oo o- -o o- oo -- o- oo o- -- o- o- -o o- o- -o o- oo oo -o o- oo oo o- -o oo oo oo oo o- oo -o -o -o oo o-
+      oo oo -- -- o- o- -o -- oo -o -o oo oo -o -- o- -- -o -o o- -o -- oo oo -o o- oo -- o- oo o- o- -o o- o- o- -- o- -o oo o- -- oo -- o- -- oo
       o- -- o- -o -o -- -o oo oo -o oo -o oo o- -- -o o- o- -- oo oo -o -o -o -- -- -- oo -- o- -- -o o- oo o- oo oo o- oo -- -- o- oo o- o- -- o-
     TENJI
   end
