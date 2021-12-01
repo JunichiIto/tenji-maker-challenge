@@ -40,6 +40,6 @@ class TenjiMaker
   end
 
   def render(tenji)
-    (0..2).map {|i| tenji.map {|s| s.slice(i * 2,2)}.join(' ')}.join("¥n")
+    (0..2).map {|i| tenji.map {|s| s.slice(i * 2,2)}.join(' ')}.join("\n")
   end
 end

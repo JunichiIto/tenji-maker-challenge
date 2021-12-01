@@ -2,7 +2,7 @@ require 'minitest/autorun'
 require_relative '../lib/tenji_maker'
 
 class TenjiMakerTest < Minitest::Test
-  # ここから下のテストは変更不可 =====================
+  # ここから下�?��?スト�?�変更不可 =====================
   def setup
     @tenji_maker = TenjiMaker.new
   end
@@ -60,7 +60,15 @@ class TenjiMakerTest < Minitest::Test
       -o o- o-
     TENJI
   end
-  # ここから上のテストは変更不可 =====================
+  # ここから上�?��?スト�?�変更不可 =====================
 
-  # 独自のテストパターンを追加するのは自由です
+  def test_ya_yu
+    tenji = @tenji_maker.to_tenji('YA YU')
+    assert_equal <<~TENJI.chomp, tenji
+      -o -o
+      -- --
+      o- oo
+    TENJI
+  end
+  # 独自の�?ストパターンを追�?するのは自由で�?
 end
