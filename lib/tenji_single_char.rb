@@ -1,8 +1,12 @@
 require_relative '../lib/tenji_handler'
 
+# 1文字で成立するローマ字を点字配列に変換するクラス
 class TenjiSingleChar
   include TenjiHandler
 
+  # 1文字で成立するローマ字から点字配列を取得する
+  # @param [String] char 点字配列に変換する1文字
+  # @return [Array] 2要素*3行の点字配列
   def to_tenji_single_array(char)
     template = Array.new(3) { Array.new(2, '-') }
     case char
@@ -22,7 +26,7 @@ class TenjiSingleChar
       template[1][0] = 'o'
       template
     when 'N' then
-      # Eの配列を上下反転、左右反転させる
+      # 'E'の点字配列を上下反転、左右反転させる
       # https://mebee.info/2020/12/15/post-23548/
       to_tenji_single_array('E').reverse.map(&:reverse)
     end

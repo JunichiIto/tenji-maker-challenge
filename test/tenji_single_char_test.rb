@@ -1,7 +1,6 @@
 require 'minitest/autorun'
 require_relative '../lib/tenji_single_char'
 
-# 点字母音の生成テスト
 class TenjiSingleCharTest < Minitest::Test
   def setup
     @tenji_single = TenjiSingleChar.new

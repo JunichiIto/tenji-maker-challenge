@@ -1,8 +1,12 @@
 require_relative '../lib/tenji_handler'
 
+# 2文字で成立するローマ字の子音部分を点字配列に変換するクラス
 class TenjiDoubleChar
   include TenjiHandler
 
+  # 2文字で成立するローマ字の子音部分から点字配列を取得する
+  # @param [String] char 点字配列に変換する1文字
+  # @return [Array] 2要素*3行の点字配列
   def to_tenji_double_array(char)
     template = Array.new(3) { Array.new(2, '-') }
     case char
