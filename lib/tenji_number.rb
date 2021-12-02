@@ -30,4 +30,34 @@ class TenjiNumber
   def initialize(letters)
     @letters = letters
   end
+
+  def convert_to_number
+    @letters.map do |letter|
+      if other_letter?(letter)
+        OTHER_LETTER_NUMBER[letter]
+      elsif vowel?(letter)
+        VOWEL_NUMBER[letter]
+      else
+        build_number(letter)
+      end
+    end
+  end
+
+  private
+
+  def other_letter?(letter)
+    other_letters = %w[YA YU YO WA N]
+    other_letters.any?(letter)
+  end
+
+  def vowel?(letter)
+    vowels = %w[A I U E O]
+    vowels.any?(letter)
+  end
+
+  def build_number(letter)
+    consonant = CONSONANT_NUMBER[letter[0]]
+    vowel = VOWEL_NUMBER[letter[1]]
+    vowel + consonant
+  end
 end
