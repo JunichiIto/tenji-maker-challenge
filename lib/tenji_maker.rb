@@ -20,7 +20,7 @@ class TenjiMaker
   def to_tenji(text)
     romaji_char_array = text.split(' ')
     tenji_array = text.split(' ').map { |romaji_char|
-      @tenji_generator.to_tenji_char(romaji_char)
+      @tenji_generator.to_tenji_char_array(romaji_char)
     }
     @tenji_generator.show_tenji(tenji_array)
   end

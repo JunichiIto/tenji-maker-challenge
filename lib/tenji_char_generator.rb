@@ -13,9 +13,13 @@ class TenjiCharGenerator
   end
 
   # 点字に変換したいローマ字1文字から点字配列を取得する
-  # @param [String] romaji_char 点字配列に変換するローマ字1文字(A,KA,WA 等)
+  #
+  # @example 'KA'を点字配列に変換する
+  #   to_tenji_char_array('tenji_char') #=> [['o', '-'], ['-', '-'], ['-', 'o']]
+  #
+  # @param [String] romaji_char 点字配列に変換するローマ字1文字('A','KA','WA' 等)
   # @return [Array] 2要素*3行の点字配列
-  def to_tenji_char(romaji_char)
+  def to_tenji_char_array(romaji_char)
     tenji_single_array = @tenji_single.to_tenji_single_array(romaji_char[-1])
     return tenji_single_array if romaji_char.length == 1
 
