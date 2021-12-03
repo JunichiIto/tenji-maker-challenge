@@ -11,7 +11,7 @@ class TenjiMaker
     # --
     def stringify_tenji(binary)
       chars = format('%06B', binary).chars
-      "#{chars[0]}#{chars[3]}\n#{chars[1]}#{chars[4]}\n#{chars[2]}#{chars[5]}".gsub!('0', '-').gsub('1', 'o')
+      "#{chars[0]}#{chars[3]}\n#{chars[1]}#{chars[4]}\n#{chars[2]}#{chars[5]}".gsub!('0', '-').gsub!('1', 'o')
     end
 
     # 引数として渡された点字バイナリ表現配列から点字表現として結合した文字列を返す
