@@ -5,6 +5,8 @@ class TenjiSingleChar
   include TenjiHandler
 
   # 1文字で成立するローマ字から点字配列を取得する
+  # @example 'A'を点字配列に変換する
+  #   to_tenji_single_array('A') #=> [['o', '-'], ['-', '-'], ['-', '-']]
   # @param [String] char 点字配列に変換する1文字
   # @return [Array] 2要素*3行の点字配列
   def to_tenji_single_array(char)
