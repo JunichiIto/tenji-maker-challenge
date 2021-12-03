@@ -8,8 +8,13 @@ class TenjiMaker
   end
 
   # 点字に変換したい文字列を取得し、点字に変換した文字列を表示する
-  # @param [String] text 点字配列に変換するローマ字の文章(A HI RU,KA RA SU 等)
-  # @return [Array] 2要素配列*3の点字配列
+  # @example 'A HI RU'を点字に変換する
+  #   to_tenji_double_array('A HI RU')
+  #   #=> o- o- oo
+  #       -- o- -o
+  #       -- oo --
+  # @param [String] text 点字に変換するローマ字の文章('A HI RU','KA RA SU' 等)
+  # @return [String] 点字の間をスペースで区切った文字文字列
   def to_tenji(text)
     romaji_char_array = text.split(' ')
     tenji_array = text.split(' ').map { |romaji_char|
