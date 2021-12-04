@@ -43,7 +43,17 @@ class TenjiMaker
     end
   end
 
-  def to_tenji_array(_word)
-    ROMAJI2KANA[:KI]
+  private
+
+  def to_tenji_binary_leter(letter)
+    return IRREGULARS[letter.to_sym] if letter.match?(/W|Y|N/)
+
+    vowel = letter[-1]
+    if letter.length == 1
+      VOWELS[vowel.to_sym].concat([0, 0, 0])
+    else
+      consonant = letter[0]
+      VOWELS[vowel.to_sym].concat(CONSONANTS[consonant.to_sym])
+    end
   end
 end
