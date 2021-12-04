@@ -7,5 +7,5 @@ class TenjiMaker
 
   IRREGULARS = { YA: [0, 1, 0, 0, 1, 0], YU: [0, 1, 0, 0, 1, 1],
                  YO: [0, 1, 0, 1, 1, 0], WA: [0, 0, 0, 0, 1, 0],
-                 N: [0, 0, 0, 1, 1, 0] }.freeze
+                 N: [0, 0, 0, 1, 1, 1] }.freeze
 end
