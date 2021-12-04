@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TenjiMaker
   FIRST_CONVERSION_TABLE = {
     'A' => [0],
@@ -7,7 +9,7 @@ class TenjiMaker
     'O' => [1, 3],
     'N' => [2, 4, 5],
     'Y' => [3]
-  }
+  }.freeze
 
   SECOND_CONVERSION_TABLE = {
     'K' => [5],
@@ -21,7 +23,7 @@ class TenjiMaker
     'A' => [2],
     'U' => [2, 5],
     'O' => [2, 4]
-  }
+  }.freeze
 
   def to_tenji(text)
     moras = text.split(' ')
@@ -42,6 +44,6 @@ class TenjiMaker
 
   def formatted_tenji(squares)
     transposed_squares = squares.map { |square| square.each_slice(3).to_a.transpose.map(&:join) }
-    transposed_squares.transpose.map { |rows| rows.join(' ')}.join("\n")
+    transposed_squares.transpose.map { |rows| rows.join(' ') }.join("\n")
   end
 end
