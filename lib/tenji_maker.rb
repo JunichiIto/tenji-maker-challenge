@@ -1,3 +1,5 @@
+require 'constants'
+
 class TenjiMaker
   def to_tenji(text)
     # 以下はサンプルの仮実装なので、このcase文は全部消して自作ロジックに書き直すこと
@@ -39,5 +41,9 @@ class TenjiMaker
         -o o- o-
       TENJI
     end
+  end
+
+  def to_tenji_array(_word)
+    ROMAJI2KANA[:KI]
   end
 end
