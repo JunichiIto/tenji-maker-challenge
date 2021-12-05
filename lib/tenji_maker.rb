@@ -107,7 +107,7 @@ class TenjiMaker
         next TENJI_N_OR_NN
       end
 
-      points_and_lines_made_from_alphabet_letters = romanisation_japanese_letter.split(//).map do |letter|
+      consornant_and_vowel_tenjis = romanisation_japanese_letter.split(//).map do |letter|
         vowel_points_needs_shift_downward_flag = true if CONSONANTS_NEEDS_VOWEL_POINTS_SHIFT_DOWNWARD.include?(letter)
 
         if VOWELS.has_key?(letter.to_sym)
@@ -117,9 +117,9 @@ class TenjiMaker
         end
       end
 
-      points_and_lines_made_from_alphabet_letters.compact!
-      points_and_lines_made_from_alphabet_letters = vowel_points_and_lines_shift_downward(points_and_lines_made_from_alphabet_letters) if vowel_points_needs_shift_downward_flag
-      compound_vowel_and_consonant_points_and_lines(points_and_lines_made_from_alphabet_letters)
+      consornant_and_vowel_tenjis.compact!
+      consornant_and_vowel_tenjis = vowel_tenji_shift_downward(consornant_and_vowel_tenjis) if vowel_points_needs_shift_downward_flag
+      compound_consornant_and_vowel_tenjis(consornant_and_vowel_tenjis)
     end
   end
 
@@ -127,58 +127,56 @@ class TenjiMaker
     tenjis = ["\n", "\n"]
 
     tenji_made_from_letters.each_with_index do |tenji, i|
-      points_and_lines = tenji.split(//)
-
       unless last_letter?(tenji_made_from_letters, i)
-        tenjis.insert((i)*3, points_and_lines[0], points_and_lines[1], "\ ")
-        tenjis.insert((i)*6+4, points_and_lines[3], points_and_lines[4], "\ ")
-        tenjis.insert((i)*9+8, points_and_lines[6], points_and_lines[7], "\ ")
+        tenjis.insert((i)*3, tenji[0], tenji[1], "\ ")
+        tenjis.insert((i)*6+4, tenji[3], tenji[4], "\ ")
+        tenjis.insert((i)*9+8, tenji[6], tenji[7], "\ ")
       else
-        tenjis.insert((i)*3, points_and_lines[0], points_and_lines[1])
-        tenjis.insert((i)*6+3, points_and_lines[3], points_and_lines[4])
-        tenjis.insert((i)*9+6, points_and_lines[6], points_and_lines[7])
+        tenjis.insert((i)*3, tenji[0], tenji[1])
+        tenjis.insert((i)*6+3, tenji[3], tenji[4])
+        tenjis.insert((i)*9+6, tenji[6], tenji[7])
       end
     end
 
     tenjis.join
   end
 
-  def vowel_points_and_lines_shift_downward(points_and_lines_made_from_alphabet_letters)
-    points_and_lines_made_from_alphabet_letters.map! do |points_and_lines_made_from_alphabet_letter|
+  def vowel_tenji_shift_downward(consornant_and_vowel_tenjis)
+    consornant_and_vowel_tenjis.map! do |consornant_or_vowel_tenji|
 
-      next points_and_lines_made_from_alphabet_letter unless VOWELS.value?(points_and_lines_made_from_alphabet_letter)
+      next consornant_or_vowel_tenji unless VOWELS.value?(consornant_or_vowel_tenji)
 
-      slided_points_and_lines_made_from_alphabet_letter = ''
+      vowel_tenji = consornant_or_vowel_tenji
+      slided_vowel_tenji = ''
+
       MAXIMUM_TIMES_SHIFT_DOWNWARD.times do
-        slided_points_and_lines_made_from_alphabet_letter = "--\n" + points_and_lines_made_from_alphabet_letter[0] + points_and_lines_made_from_alphabet_letter[1] + "\n" + points_and_lines_made_from_alphabet_letter[3] + points_and_lines_made_from_alphabet_letter[4]
-        break slided_points_and_lines_made_from_alphabet_letter if slided_points_and_lines_made_from_alphabet_letter[6] == 'o'
+        slided_vowel_tenji = "--\n" + vowel_tenji[0] + vowel_tenji[1] + "\n" + vowel_tenji[3] + vowel_tenji[4]
+        break slided_vowel_tenji if slided_vowel_tenji[6] == 'o' || slided_vowel_tenji[7] == 'o'
 
-        points_and_lines_made_from_alphabet_letter = slided_points_and_lines_made_from_alphabet_letter
+        vowel_tenji = slided_vowel_tenji
       end
 
-      slided_points_and_lines_made_from_alphabet_letter
+      slided_vowel_tenji
     end
   end
 
-  def compound_vowel_and_consonant_points_and_lines(points_and_lines_made_from_alphabet_letters)
-    return points_and_lines_made_from_alphabet_letters[0] if points_and_lines_made_from_alphabet_letters[1].nil?
+  def compound_consornant_and_vowel_tenjis(consornant_and_vowel_tenjis)
+    return consornant_and_vowel_tenjis[0] if consornant_and_vowel_tenjis[1].nil?
 
-    dismantled_points_and_lines_made_from_alphabet_letters = points_and_lines_made_from_alphabet_letters.map { |points_and_lines_made_from_alphabet_letter| points_and_lines_made_from_alphabet_letter.split(//) }
+    consornant_tenji = consornant_and_vowel_tenjis[0]
+    vowel_tenji = consornant_and_vowel_tenjis[1]
 
-    dismantled_consolnant_points_and_lines = dismantled_points_and_lines_made_from_alphabet_letters[0]
-    dismantled_vowel_points_and_lines = dismantled_points_and_lines_made_from_alphabet_letters[1]
-
-    points_and_lines_to_make_tenji = []
+    points_and_lines_of_tenji = []
     
     LENGTH_OF_POINTS_AND_LINES_TO_TENJI.times do |num|
-      points_and_lines_to_make_tenji[num] = compound_each_point_or_line(dismantled_consolnant_points_and_lines[num], dismantled_vowel_points_and_lines[num])
+      points_and_lines_of_tenji[num] = compound_each_point_or_line(consornant_tenji[num], vowel_tenji[num])
     end
 
-    return points_and_lines_to_make_tenji.join
+    return points_and_lines_of_tenji.join
   end
 
-  def compound_each_point_or_line(dismantled_consolnant_points_and_lines, dismantled_vowel_points_and_lines)
-    return dismantled_consolnant_points_and_lines if dismantled_consolnant_points_and_lines == dismantled_vowel_points_and_lines
+  def compound_each_point_or_line(consolnant_point_or_line, vowel_point_or_line)
+    return consolnant_point_or_line if consolnant_point_or_line == vowel_point_or_line
 
     'o'
   end
