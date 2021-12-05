@@ -35,7 +35,7 @@ class TenjiMaker
   def dot(moras)
     moras.map do |mora|
       square = Array.new(6) { '-' }
-      first_char, second_char = mora.start_with?(/[WY]/) ? mora.split('') : mora.split('').reverse
+      first_char, second_char = mora.start_with?(/[WY]/) ? mora.chars : mora.chars.reverse
 
       FIRST_CONVERSION_TABLE[first_char]&.each { |i| square[i] = 'o' }
       SECOND_CONVERSION_TABLE[second_char]&.each { |i| square[i] = 'o' }
