@@ -31,6 +31,8 @@ class TenjiMaker
     formatted_tenji(squares)
   end
 
+  private
+
   def dot(moras)
     moras.map do |mora|
       square = Array.new(6) { '-' }
