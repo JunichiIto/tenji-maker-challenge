@@ -1,7 +1,7 @@
 class TenjiMaker
   LENGTH_OF_DOTS_AND_LINES_TO_TENJI = 8
   MAXIMUM_TIMES_SHIFT_DOWNWARD = 2
-  CONSONANTS_NEEDS_VOWEL_TENJI_INVERSE = ['Y', 'W']
+  CONSONANTS_NEEDS_VOWEL_TENJI_SHIFT_DOWNWARD = ['Y', 'W']
   ROMANISATION_JAPANESE_LETTER_MEANS_N = ['N', 'NN']
 
   VOWELS = {
@@ -101,14 +101,14 @@ class TenjiMaker
 
   def dots_and_lines_build(text)
     text.split(' ').map do |romanisation_japanese_letter|
-      vowel_tenji_inverse_flag = false
+      vowel_tenji_needs_shift_downward_flag = false
 
       if ROMANISATION_JAPANESE_LETTER_MEANS_N.include?(romanisation_japanese_letter)
         next TENJI_N_OR_NN
       end
 
       dots_and_lines_made_from_alphabet_letters = romanisation_japanese_letter.split(//).map do |letter|
-        vowel_tenji_inverse_flag = true if CONSONANTS_NEEDS_VOWEL_TENJI_INVERSE.include?(letter)
+        vowel_tenji_needs_shift_downward_flag = true if CONSONANTS_NEEDS_VOWEL_TENJI_SHIFT_DOWNWARD.include?(letter)
 
         if VOWELS.has_key?(letter.to_sym)
           VOWELS[letter.to_sym]
@@ -118,7 +118,7 @@ class TenjiMaker
       end
 
       dots_and_lines_made_from_alphabet_letters.compact!
-      dots_and_lines_made_from_alphabet_letters = vowel_dots_and_lines_slide_bottom(dots_and_lines_made_from_alphabet_letters) if vowel_tenji_inverse_flag
+      dots_and_lines_made_from_alphabet_letters = vowel_dots_and_lines_shift_downward(dots_and_lines_made_from_alphabet_letters) if vowel_tenji_needs_shift_downward_flag
       compound_vowel_and_consonant_dots_and_lines(dots_and_lines_made_from_alphabet_letters)
     end
   end
@@ -143,7 +143,7 @@ class TenjiMaker
     tenji.join
   end
 
-  def vowel_dots_and_lines_slide_bottom(dots_and_lines_made_from_alphabet_letters)
+  def vowel_dots_and_lines_shift_downward(dots_and_lines_made_from_alphabet_letters)
     dots_and_lines_made_from_alphabet_letters.map! do |dots_and_lines_made_from_alphabet_letter|
 
       next dots_and_lines_made_from_alphabet_letter unless VOWELS.value?(dots_and_lines_made_from_alphabet_letter)
