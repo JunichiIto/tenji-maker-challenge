@@ -1,7 +1,7 @@
 class TenjiMaker
   LENGTH_OF_DOTS_AND_LINES_TO_TENJI = 8
   MAXIMUM_TIMES_SHIFT_DOWNWARD = 2
-  CONSONANTS_NEEDS_VOWEL_TENJI_SHIFT_DOWNWARD = ['Y', 'W']
+  CONSONANTS_NEEDS_VOWEL_DOTS_SHIFT_DOWNWARD = ['Y', 'W']
   ROMANISATION_JAPANESE_LETTER_MEANS_N = ['N', 'NN']
 
   VOWELS = {
@@ -93,22 +93,22 @@ class TenjiMaker
   TENJI_N_OR_NN
 
   def to_tenji(text)
-    dots_and_lines_made_from_letters = dots_and_lines_build(text)
-    format_to_tenji(dots_and_lines_made_from_letters)
+    tenji_made_from_letters = build_tenjis(text)
+    format_to_tenjis(tenji_made_from_letters)
   end
 
   private
 
-  def dots_and_lines_build(text)
+  def build_tenjis(text)
     text.split(' ').map do |romanisation_japanese_letter|
-      vowel_tenji_needs_shift_downward_flag = false
+      vowel_dots_needs_shift_downward_flag = false
 
       if ROMANISATION_JAPANESE_LETTER_MEANS_N.include?(romanisation_japanese_letter)
         next TENJI_N_OR_NN
       end
 
       dots_and_lines_made_from_alphabet_letters = romanisation_japanese_letter.split(//).map do |letter|
-        vowel_tenji_needs_shift_downward_flag = true if CONSONANTS_NEEDS_VOWEL_TENJI_SHIFT_DOWNWARD.include?(letter)
+        vowel_dots_needs_shift_downward_flag = true if CONSONANTS_NEEDS_VOWEL_DOTS_SHIFT_DOWNWARD.include?(letter)
 
         if VOWELS.has_key?(letter.to_sym)
           VOWELS[letter.to_sym]
@@ -118,29 +118,29 @@ class TenjiMaker
       end
 
       dots_and_lines_made_from_alphabet_letters.compact!
-      dots_and_lines_made_from_alphabet_letters = vowel_dots_and_lines_shift_downward(dots_and_lines_made_from_alphabet_letters) if vowel_tenji_needs_shift_downward_flag
+      dots_and_lines_made_from_alphabet_letters = vowel_dots_and_lines_shift_downward(dots_and_lines_made_from_alphabet_letters) if vowel_dots_needs_shift_downward_flag
       compound_vowel_and_consonant_dots_and_lines(dots_and_lines_made_from_alphabet_letters)
     end
   end
 
-  def format_to_tenji(dots_and_lines_made_from_letters)
-    tenji = ["\n", "\n"]
+  def format_to_tenjis(tenji_made_from_letters)
+    tenjis = ["\n", "\n"]
 
-    dots_and_lines_made_from_letters.each_with_index do |dots_and_lines_made_from_letter, i|
-      dots_and_lines = dots_and_lines_made_from_letter.split(//)
+    tenji_made_from_letters.each_with_index do |tenji, i|
+      dots_and_lines = tenji.split(//)
 
-      unless last_letter?(dots_and_lines_made_from_letters, i)
-        tenji.insert((i)*3, dots_and_lines[0], dots_and_lines[1], "\ ")
-        tenji.insert((i)*6+4, dots_and_lines[3], dots_and_lines[4], "\ ")
-        tenji.insert((i)*9+8, dots_and_lines[6], dots_and_lines[7], "\ ")
+      unless last_letter?(tenji_made_from_letters, i)
+        tenjis.insert((i)*3, dots_and_lines[0], dots_and_lines[1], "\ ")
+        tenjis.insert((i)*6+4, dots_and_lines[3], dots_and_lines[4], "\ ")
+        tenjis.insert((i)*9+8, dots_and_lines[6], dots_and_lines[7], "\ ")
       else
-        tenji.insert((i)*3, dots_and_lines[0], dots_and_lines[1])
-        tenji.insert((i)*6+3, dots_and_lines[3], dots_and_lines[4])
-        tenji.insert((i)*9+6, dots_and_lines[6], dots_and_lines[7])
+        tenjis.insert((i)*3, dots_and_lines[0], dots_and_lines[1])
+        tenjis.insert((i)*6+3, dots_and_lines[3], dots_and_lines[4])
+        tenjis.insert((i)*9+6, dots_and_lines[6], dots_and_lines[7])
       end
     end
 
-    tenji.join
+    tenjis.join
   end
 
   def vowel_dots_and_lines_shift_downward(dots_and_lines_made_from_alphabet_letters)
@@ -183,7 +183,7 @@ class TenjiMaker
     'o'
   end
 
-  def last_letter?(dots_and_lines_made_from_letters, i)
-    dots_and_lines_made_from_letters.size - 1 == i
+  def last_letter?(tenji_made_from_letters, i)
+    tenji_made_from_letters.size - 1 == i
   end
 end
