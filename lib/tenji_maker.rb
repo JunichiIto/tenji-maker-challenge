@@ -28,7 +28,7 @@ class TenjiMaker
   def to_tenji(text)
     moras = text.split(' ')
     squares = dot(moras)
-    formatted_tenji(squares)
+    format_tenji(squares)
   end
 
   private
@@ -44,7 +44,7 @@ class TenjiMaker
     end
   end
 
-  def formatted_tenji(squares)
+  def format_tenji(squares)
     transposed_squares = squares.map { |square| square.each_slice(3).to_a.transpose.map(&:join) }
     transposed_squares.transpose.map { |rows| rows.join(' ') }.join("\n")
   end
