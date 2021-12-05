@@ -147,16 +147,16 @@ class TenjiMaker
       next consornant_or_vowel_tenji unless VOWELS.value?(consornant_or_vowel_tenji)
 
       vowel_tenji = consornant_or_vowel_tenji
-      slided_vowel_tenji = ''
+      shifted_vowel_tenji = ''
 
       MAXIMUM_TIMES_SHIFT_DOWNWARD.times do
-        slided_vowel_tenji = "--\n" + vowel_tenji[0] + vowel_tenji[1] + "\n" + vowel_tenji[3] + vowel_tenji[4]
-        break slided_vowel_tenji if slided_vowel_tenji[6] == 'o' || slided_vowel_tenji[7] == 'o'
+        shifted_vowel_tenji = "--\n" + vowel_tenji[0] + vowel_tenji[1] + "\n" + vowel_tenji[3] + vowel_tenji[4]
+        break shifted_vowel_tenji if shifted_vowel_tenji[6] == 'o' || shifted_vowel_tenji[7] == 'o'
 
-        vowel_tenji = slided_vowel_tenji
+        vowel_tenji = shifted_vowel_tenji
       end
 
-      slided_vowel_tenji
+      shifted_vowel_tenji
     end
   end
 
