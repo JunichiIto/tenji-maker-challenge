@@ -129,7 +129,7 @@ class TenjiMaker
     dots_and_lines_made_from_letters.each_with_index do |dots_and_lines_made_from_letter, i|
       dots_and_lines = dots_and_lines_made_from_letter.split(//)
 
-      if dots_and_lines_made_from_letters.size - 1 != i
+      unless last_letter?(dots_and_lines_made_from_letters, i)
         tenji.insert((i)*3, dots_and_lines[0], dots_and_lines[1], "\ ")
         tenji.insert((i)*6+4, dots_and_lines[3], dots_and_lines[4], "\ ")
         tenji.insert((i)*9+8, dots_and_lines[6], dots_and_lines[7], "\ ")
@@ -181,5 +181,9 @@ class TenjiMaker
     return dismantled_consolnant_dots_and_lines if dismantled_consolnant_dots_and_lines == dismantled_vowel_dots_and_lines
 
     'o'
+  end
+
+  def last_letter?(dots_and_lines_made_from_letters, i)
+    dots_and_lines_made_from_letters.size - 1 == i
   end
 end
