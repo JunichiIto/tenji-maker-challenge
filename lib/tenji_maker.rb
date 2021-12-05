@@ -124,21 +124,21 @@ class TenjiMaker
   end
 
   def format_to_tenjis(tenji_made_from_letters)
-    tenjis = ["\n", "\n"]
+    formatted_tenji = "\n\n"
 
     tenji_made_from_letters.each_with_index do |tenji, i|
       unless last_letter?(tenji_made_from_letters, i)
-        tenjis.insert((i)*3, tenji[0], tenji[1], "\ ")
-        tenjis.insert((i)*6+4, tenji[3], tenji[4], "\ ")
-        tenjis.insert((i)*9+8, tenji[6], tenji[7], "\ ")
+        formatted_tenji.insert((i)*3, tenji[0] + tenji[1] + "\ ")
+        formatted_tenji.insert((i)*6+4, tenji[3] + tenji[4] + "\ ")
+        formatted_tenji.insert((i)*9+8, tenji[6] + tenji[7] + "\ ")
       else
-        tenjis.insert((i)*3, tenji[0], tenji[1])
-        tenjis.insert((i)*6+3, tenji[3], tenji[4])
-        tenjis.insert((i)*9+6, tenji[6], tenji[7])
+        formatted_tenji.insert((i)*3, tenji[0] + tenji[1])
+        formatted_tenji.insert((i)*6+3, tenji[3] + tenji[4])
+        formatted_tenji.insert((i)*9+6, tenji[6] + tenji[7])
       end
     end
 
-    tenjis.join
+    formatted_tenji
   end
 
   def vowel_tenji_shift_downward(consornant_and_vowel_tenjis)
@@ -166,13 +166,13 @@ class TenjiMaker
     consornant_tenji = consornant_and_vowel_tenjis[0]
     vowel_tenji = consornant_and_vowel_tenjis[1]
 
-    points_and_lines_of_tenji = []
+    points_and_lines_of_tenji = ''
     
     LENGTH_OF_POINTS_AND_LINES_TO_TENJI.times do |num|
       points_and_lines_of_tenji[num] = compound_each_point_or_line(consornant_tenji[num], vowel_tenji[num])
     end
 
-    return points_and_lines_of_tenji.join
+    return points_and_lines_of_tenji
   end
 
   def compound_each_point_or_line(consolnant_point_or_line, vowel_point_or_line)
