@@ -21,7 +21,7 @@ class TenjiMaker
 
   def to_tenji(text)
     roman_chars = text.split(' ')
-    one_line_tenji_array = roman_chars.map { |char| to_tenji_each_char(char) }
+    one_line_tenji_array = roman_chars.map { |roman_char| to_tenji_each_char(roman_char) }
 
     top, middle, bottom = split_three_row(one_line_tenji_array)
 
@@ -50,24 +50,25 @@ class TenjiMaker
     return top, middle, bottom
   end
 
-  def to_tenji_each_char(char)
-    if char.size == 1
-      char == 'N' ? '---ooo' : VOWELS[char.to_sym] + '---'
-    else
-      if char[0] == 'Y'
+  def to_tenji_each_char(roman_char)
+    if roman_char.size == 1
+      roman_char == 'N' ? '---ooo' : VOWELS[roman_char.to_sym] + '---'
+    elsif roman_char.size == 2
+      consonant, vowel = roman_char.chars
+      if consonant == 'Y'
         CONSONANTS[:Y] +
-          case char[1]
+          case vowel
           when 'A'
             '-o-'
           when 'U'
-            'oo-'
+            '-oo'
           when 'O'
             'oo-'
           end
-      elsif char == 'WA'
+      elsif roman_char == 'WA'
         '----o-'
       else
-        VOWELS[char[1].to_sym] + CONSONANTS[char[0].to_sym]
+        VOWELS[vowel.to_sym] + CONSONANTS[consonant.to_sym]
       end
     end
   end
