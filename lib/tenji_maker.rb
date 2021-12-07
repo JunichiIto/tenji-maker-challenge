@@ -23,12 +23,7 @@ class TenjiMaker
     chars = text.split(' ')
     one_line_tenji_array = chars.map { |char| to_tenji_each_char(char) }
 
-    top, middle, bottom = Array.new(3) { [] }
-    one_line_tenji_array.each do |t|
-      top << t[0, 2]
-      middle << t[2, 2]
-      bottom << t[4, 2]
-    end
+    top, middle, bottom = split_three_row(one_line_tenji_array)
 
     output = {}
     output[:top] = top.join(' ')
@@ -44,6 +39,17 @@ class TenjiMaker
 
   private
 
+  def split_three_row(one_line_tenji_array)
+    top, middle, bottom = Array.new(3) { [] }
+    push_to_row = ->(row, tenji, start_point) { row << tenji[start_point, 2] }
+    one_line_tenji_array.each do |t|
+      push_to_row.call(top, t, 0)
+      push_to_row.call(middle, t, 2)
+      push_to_row.call(bottom, t, 4)
+    end
+    return top, middle, bottom
+  end
+
   def to_tenji_each_char(char)
     if char.size == 1
       case char
@@ -55,14 +61,14 @@ class TenjiMaker
     else
       if char[0] == 'Y'
         CONSONANTS[:Y] +
-        case char[1]
-        when 'A'
-          '-o-'
-        when 'U'
-          'oo-'
-        when 'O'
-          'oo-'
-        end
+          case char[1]
+          when 'A'
+            '-o-'
+          when 'U'
+            'oo-'
+          when 'O'
+            'oo-'
+          end
       elsif char == 'WA'
         '----o-'
       else
