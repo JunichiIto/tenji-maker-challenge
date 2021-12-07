@@ -52,12 +52,7 @@ class TenjiMaker
 
   def to_tenji_each_char(char)
     if char.size == 1
-      case char
-      when 'N'
-        '---ooo'
-      else
-        VOWELS[char.to_sym] + '---'
-      end
+      char == 'N' ? '---ooo' : VOWELS[char.to_sym] + '---'
     else
       if char[0] == 'Y'
         CONSONANTS[:Y] +
