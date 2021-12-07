@@ -22,21 +22,23 @@ class TenjiMaker
   def to_tenji(text)
     chars = text.split(' ')
     tenji = chars.map { |char| to_tenji_each_char(char) }
-    top, middle, bottom, total = Array.new(4) { [] }
+
+    top, middle, bottom = Array.new(3) { [] }
     tenji.each do |t|
       top << t[0, 2]
       middle << t[2, 2]
       bottom << t[4, 2]
     end
 
-    total << top.join(' ')
-    total << middle.join(' ')
-    total << bottom.join(' ')
+    total = {}
+    total[:top] = top.join(' ')
+    total[:middle] = middle.join(' ')
+    total[:bottom] = bottom.join(' ')
 
     <<~TENJI.chomp
-      #{total[0]}
-      #{total[1]}
-      #{total[2]}
+      #{total[:top]}
+      #{total[:middle]}
+      #{total[:bottom]}
     TENJI
   end
 
