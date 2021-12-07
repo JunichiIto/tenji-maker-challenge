@@ -21,10 +21,10 @@ class TenjiMaker
 
   def to_tenji(text)
     chars = text.split(' ')
-    tenji_array = chars.map { |char| to_tenji_each_char(char) }
+    one_line_tenji_array = chars.map { |char| to_tenji_each_char(char) }
 
     top, middle, bottom = Array.new(3) { [] }
-    tenji_array.each do |t|
+    one_line_tenji_array.each do |t|
       top << t[0, 2]
       middle << t[2, 2]
       bottom << t[4, 2]
@@ -62,7 +62,7 @@ class TenjiMaker
         when 'U'
           Consonants[char[0].to_sym] + 'oo-'
         when 'O'
-          p Consonants[char[0].to_sym] + 'oo-'
+          Consonants[char[0].to_sym] + 'oo-'
         end
       elsif char == 'WA'
         '----o-'
