@@ -1,22 +1,22 @@
 class TenjiMaker
   Vowels = {
-    a: 'o--',
-    i: 'o-o',
-    u: 'oo-',
-    e: 'ooo',
-    o: '-oo'
+    A: 'o--',
+    I: 'o-o',
+    U: 'oo-',
+    E: 'ooo',
+    O: '-oo'
   }
 
   Consonants = {
-    k: '--o',
-    s: 'o-o',
-    t: 'oo-',
-    n: '-o-',
-    h: '-oo',
-    m: 'ooo',
-    r: 'o--',
-    y: '-o-',
-    w: '---'
+    K: '--o',
+    S: 'o-o',
+    T: 'oo-',
+    N: '-o-',
+    H: '-oo',
+    M: 'ooo',
+    R: 'o--',
+    Y: '-o-',
+    W: '---'
   }
 
   def to_tenji(text)
@@ -51,23 +51,23 @@ class TenjiMaker
       when 'N'
         tenji = '---ooo'
       else
-        tenji = Vowels[char.downcase.to_sym]
+        tenji = Vowels[char.to_sym]
       end
       tenji += '---'
     else
       if char[0] == 'Y'
         case char[1]
         when 'A'
-          Consonants[char[0].downcase.to_sym] + '-o-'
+          Consonants[char[0].to_sym] + '-o-'
         when 'U'
-          Consonants[char[0].downcase.to_sym] + 'oo-'
+          Consonants[char[0].to_sym] + 'oo-'
         when 'O'
-          p Consonants[char[0].downcase.to_sym] + 'oo-'
+          p Consonants[char[0].to_sym] + 'oo-'
         end
       elsif char == 'WA'
         '----o-'
       else
-        Vowels[char[1].downcase.to_sym] + Consonants[char[0].downcase.to_sym]
+        Vowels[char[1].to_sym] + Consonants[char[0].to_sym]
       end
     end
   end
