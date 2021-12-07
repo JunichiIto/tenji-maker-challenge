@@ -1,5 +1,5 @@
 class TenjiMaker
-  Vowels = {
+  VOWELS = {
     A: 'o--',
     I: 'o-o',
     U: 'oo-',
@@ -7,7 +7,7 @@ class TenjiMaker
     O: '-oo'
   }
 
-  Consonants = {
+  CONSONANTS = {
     K: '--o',
     S: 'o-o',
     T: 'oo-',
@@ -50,11 +50,11 @@ class TenjiMaker
       when 'N'
         '---ooo'
       else
-        Vowels[char.to_sym] + '---'
+        VOWELS[char.to_sym] + '---'
       end
     else
       if char[0] == 'Y'
-        Consonants[:Y] +
+        CONSONANTS[:Y] +
         case char[1]
         when 'A'
           '-o-'
@@ -66,7 +66,7 @@ class TenjiMaker
       elsif char == 'WA'
         '----o-'
       else
-        Vowels[char[1].to_sym] + Consonants[char[0].to_sym]
+        VOWELS[char[1].to_sym] + CONSONANTS[char[0].to_sym]
       end
     end
   end
