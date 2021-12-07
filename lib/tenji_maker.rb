@@ -20,8 +20,8 @@ class TenjiMaker
   }
 
   def to_tenji(text)
-    chars = text.split(' ')
-    one_line_tenji_array = chars.map { |char| to_tenji_each_char(char) }
+    roman_chars = text.split(' ')
+    one_line_tenji_array = roman_chars.map { |char| to_tenji_each_char(char) }
 
     top, middle, bottom = split_three_row(one_line_tenji_array)
 
