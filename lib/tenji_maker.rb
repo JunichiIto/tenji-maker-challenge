@@ -46,23 +46,22 @@ class TenjiMaker
 
   def to_tenji_each_char(char)
     if char.size == 1
-      tenji = ''
       case char
       when 'N'
-        tenji = '---ooo'
+        '---ooo'
       else
-        tenji = Vowels[char.to_sym]
+        Vowels[char.to_sym] + '---'
       end
-      tenji += '---'
     else
       if char[0] == 'Y'
+        Consonants[:Y] +
         case char[1]
         when 'A'
-          Consonants[char[0].to_sym] + '-o-'
+          '-o-'
         when 'U'
-          Consonants[char[0].to_sym] + 'oo-'
+          'oo-'
         when 'O'
-          Consonants[char[0].to_sym] + 'oo-'
+          'oo-'
         end
       elsif char == 'WA'
         '----o-'
