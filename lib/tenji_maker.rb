@@ -14,26 +14,22 @@ class TenjiMaker
     N: '-o-',
     H: '-oo',
     M: 'ooo',
-    R: 'o--',
     Y: '-o-',
-    W: '---'
+    R: 'o--'
   }
 
   def to_tenji(text)
     roman_chars = text.split(' ')
-    one_line_tenji_array = roman_chars.map { |roman_char| to_tenji_each_char(roman_char) }
+    one_line_tenji_array = roman_chars.map do |roman_char|
+      to_tenji_each_char(roman_char)
+    end
 
     top, middle, bottom = split_three_row(one_line_tenji_array)
 
-    output = {}
-    output[:top] = top.join(' ')
-    output[:middle] = middle.join(' ')
-    output[:bottom] = bottom.join(' ')
-
     <<~TENJI.chomp
-      #{output[:top]}
-      #{output[:middle]}
-      #{output[:bottom]}
+      #{top.join(' ')}
+      #{middle.join(' ')}
+      #{bottom.join(' ')}
     TENJI
   end
 
@@ -42,10 +38,10 @@ class TenjiMaker
   def split_three_row(one_line_tenji_array)
     top, middle, bottom = Array.new(3) { [] }
     push_to_row = ->(row, tenji, start_point) { row << tenji[start_point, 2] }
-    one_line_tenji_array.each do |t|
-      push_to_row.call(top, t, 0)
-      push_to_row.call(middle, t, 2)
-      push_to_row.call(bottom, t, 4)
+    one_line_tenji_array.each do |one_line_tenji|
+      push_to_row.call(top, one_line_tenji, 0)
+      push_to_row.call(middle, one_line_tenji, 2)
+      push_to_row.call(bottom, one_line_tenji, 4)
     end
     return top, middle, bottom
   end
