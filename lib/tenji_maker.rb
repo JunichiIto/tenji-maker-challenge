@@ -10,7 +10,7 @@ class TenjiMaker
   # 点字に変換したい文字列を取得し、点字に変換した文字列を表示する
   #
   # @example 'A HI RU'を点字に変換する
-  #   to_tenji_double_array('A HI RU')
+  #   to_tenji('A HI RU')
   #   #=> o- o- oo
   #       -- o- -o
   #       -- oo --
