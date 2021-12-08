@@ -1,39 +1,37 @@
 # frozen_string_literal: true
 
-require_relative 'tenji_number'
+require_relative 'tenji_character'
 
+# Format braille cells.
 class TenjiFormatter
   def initialize(letters)
     @letters = letters
   end
 
-  def format
-    build_display_table.map { |row| row.join(' ').rstrip }.join("\n")
+  def format_display_table
+    build_table.map { |row| row.join(' ').rstrip }.join("\n")
   end
 
   private
 
-  def build_display_table
-    rows =
-      to_tenji_characters.map do |characters|
-        first_row = characters[0] + characters[3]
-        second_row = characters[1] + characters[4]
-        third_row = characters[2] + characters[5]
-        [first_row, second_row, third_row]
-      end
-    rows[0].zip(*rows[1..])
+  def build_table
+    build_rows.transpose
   end
 
-  def to_tenji_characters
-    read_tenji_numbers.map do |numbers|
-      default_characters = ['-', '-', '-', '-', '-', '-']
-      numbers.each { |number| default_characters[number - 1] = 'o' }
-      default_characters
+  def build_rows
+    characters = build_character
+    characters.map do |character|
+      first_row = character[0] + character[3]
+      second_row = character[1] + character[4]
+      third_row = character[2] + character[5]
+      [first_row, second_row, third_row]
     end
   end
 
-  def read_tenji_numbers
-    tenji_numbers = TenjiNumber.new(@letters)
-    tenji_numbers.convert_to_number
+  def build_character
+    @letters.map do |letter|
+      tenji_character = TenjiCharacter.new(letter)
+      tenji_character.build_character
+    end
   end
 end
