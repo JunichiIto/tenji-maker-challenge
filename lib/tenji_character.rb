@@ -39,6 +39,8 @@ class TenjiCharacter
     default_characters.join
   end
 
+  private
+
   def search_tenji_numbers
     if fixed_letter?
       FIXED_LETTER_NUMBER[@letter]
