@@ -6,6 +6,6 @@ class TenjiMaker
   def to_tenji(text)
     letters = text.split(' ')
     tenji_formatter = TenjiFormatter.new(letters)
-    tenji_formatter.format
+    tenji_formatter.format_display_table
   end
 end
