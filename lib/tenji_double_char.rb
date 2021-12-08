@@ -12,7 +12,7 @@ class TenjiDoubleChar
   # @param [String] char 点字配列に変換する1文字
   # @return [Array] 2要素*3行の点字配列
   def to_tenji_double_array(char)
-    template = Array.new(3) { Array.new(2, '-') }
+    template = Array.new(TENJI_ROW_NUM) { Array.new(TENJI_COLUMN_NUM, '-') }
     case char
     when 'K' then
       template[2][1] = 'o'

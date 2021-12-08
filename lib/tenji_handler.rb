@@ -1,5 +1,10 @@
 # 配列を点字に変換するモジュール
 module TenjiHandler
+  # 点字の列数
+  TENJI_COLUMN_NUM = 2
+  # 点字の列数
+  TENJI_ROW_NUM = 3
+
   # 点字配列を文字列として整形して表示する
   #
   # @example [[['o', '-'], ['-', '-'], ['-', 'o']], [['o', '-'], ['-', 'o'], ['-', '-']], [['o', 'o'], ['-', 'o'], ['-', 'o']]]を点字として表示
@@ -14,7 +19,7 @@ module TenjiHandler
     # 1文字だけの点字かどうか判断
     is_single_tenji = tenji_array[0][0].kind_of?(String)
     # 点字は3行で構成されているので、各行でループする
-    tenji_rows = (0..2).map { |row_idx|
+    tenji_rows = (0...TENJI_ROW_NUM).map { |row_idx|
       # 点字1文字の場合は配列をそのまま結合した文字列を取得
       next tenji_array[row_idx].join('') if is_single_tenji
       tenji_array.inject(''){ |tenji_row_str, tenji_row| 
@@ -52,7 +57,7 @@ module TenjiHandler
   # @return [Array] 引数をマージした結果の2要素の点字行配列
   def merge_tenji_row(row_array_a, row_array_b)
     return row_array_a if row_array_a == row_array_b
-    (0..1).map { |elem_idx|
+    (0...TENJI_COLUMN_NUM).map { |elem_idx|
       # 同じ位置の要素に'o'がある場合は、その要素に'o'を反映させた配列を作成する
       row_array_a[elem_idx] == 'o' || row_array_b[elem_idx] == 'o' ? 'o' : '-'
     }
