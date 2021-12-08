@@ -1,43 +1,27 @@
 class TenjiMaker
-  def to_tenji(text)
-    # 以下はサンプルの仮実装なので、このcase文は全部消して自作ロジックに書き直すこと
-    case text
-    when 'A HI RU'
-      <<~TENJI.chomp
-        o- o- oo
-        -- o- -o
-        -- oo --
-      TENJI
-    when 'KI RI N'
-      <<~TENJI.chomp
-        o- o- --
-        o- oo -o
-        -o -- oo
-      TENJI
-    when 'SI MA U MA'
-      <<~TENJI.chomp
-        o- o- oo o-
-        oo -o -- -o
-        -o oo -- oo
-      TENJI
-    when 'NI WA TO RI'
-      <<~TENJI.chomp
-        o- -- -o o-
-        o- -- oo oo
-        o- o- o- --
-      TENJI
-    when 'HI YO KO'
-      <<~TENJI.chomp
-        o- -o -o
-        o- -o o-
-        oo o- -o
-      TENJI
-    when 'KI TU NE'
-      <<~TENJI.chomp
-        o- oo oo
-        o- -o o-
-        -o o- o-
-      TENJI
-    end
+  def new
+    TenjiMaker.new
   end
+  def to_tenji(text)
+     
+  end
+  def read_text(text)  
+   # 半角空白をカウントし文字数を割り出す 
+   nil_number = text.count(' ')
+   text_number = nil_number + 1
+   text_array = text.split
+   one_letter = '-- '
+   tenji_base = one_letter*text_number
+   @tenji_str1 = tenji_base
+   @tenji_str2 = tenji_base
+   @tenji_str3 = tenji_base
+
+
+  end
+  
+
+
+  end
+
+
 end
