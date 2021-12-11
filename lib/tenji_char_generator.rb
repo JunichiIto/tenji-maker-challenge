@@ -2,6 +2,7 @@ require_relative '../lib/tenji_handler'
 require_relative '../lib/tenji_single_char'
 require_relative '../lib/tenji_double_char'
 
+# MARK: オブジェクト指向のアンチパターンとなっている箇所の改修
 # ローマ字1文字を点字配列に変換するクラス
 class TenjiCharGenerator
   include TenjiHandler

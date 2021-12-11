@@ -1,5 +1,6 @@
 require_relative '../lib/tenji_handler'
 
+# MARK: オブジェクト指向のアンチパターンとなっている箇所の改修
 # 1文字で成立するローマ字を点字配列に変換するクラス
 class TenjiSingleChar
   include TenjiHandler
@@ -13,6 +14,7 @@ class TenjiSingleChar
   # @return [Array] 2要素*3行の点字配列
   def to_tenji_single_array(char)
     template = Array.new(TENJI_ROW_NUM) { Array.new(TENJI_COLUMN_NUM, '-') }
+    # MARK: 無駄にマージを利用している箇所を素直に定義する
     case char
     when 'A' then
       template[0][0] = 'o'

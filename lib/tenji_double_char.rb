@@ -1,5 +1,7 @@
 require_relative '../lib/tenji_handler'
 
+# MARK: オブジェクト指向のアンチパターンとなっている箇所の改修
+# MARK: クラス名を子音のクラスとする
 # 2文字で成立するローマ字の子音部分を点字配列に変換するクラス
 class TenjiDoubleChar
   include TenjiHandler
@@ -13,6 +15,7 @@ class TenjiDoubleChar
   # @return [Array] 2要素*3行の点字配列
   def to_tenji_double_array(char)
     template = Array.new(TENJI_ROW_NUM) { Array.new(TENJI_COLUMN_NUM, '-') }
+    # MARK: 無駄にマージを利用している箇所を素直に定義する
     case char
     when 'K' then
       template[2][1] = 'o'

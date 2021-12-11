@@ -58,6 +58,7 @@ module TenjiHandler
   def merge_tenji_row(row_array_a, row_array_b)
     return row_array_a if row_array_a == row_array_b
     (0...TENJI_COLUMN_NUM).map { |elem_idx|
+      # MARK: bit演算を利用する
       # 同じ位置の要素に'o'がある場合は、その要素に'o'を反映させた配列を作成する
       row_array_a[elem_idx] == 'o' || row_array_b[elem_idx] == 'o' ? 'o' : '-'
     }
