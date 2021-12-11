@@ -48,9 +48,9 @@ class Tenji
   # @return [String]
   #
   def convert_regularly
-    vowel_symboles = TABLE[@romaji.vowel]
-    consonant_symboles = TABLE[@romaji.consonant] || %w[- - -]
-    (vowel_symboles + consonant_symboles).join
+    vowel_tenjies = TABLE[@romaji.vowel]
+    consonant_tenjies = TABLE[@romaji.consonant] || %w[- - -]
+    (vowel_tenjies + consonant_tenjies).join
   end
 
   #
