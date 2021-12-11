@@ -1,43 +1,36 @@
+require_relative '../lib/tenji'
+require_relative '../lib/renderer'
+
+#
+# 点字メーカー
+#
 class TenjiMaker
+  #
+  # 点字に変換/出力する
+  #
+  # @param [String] text
+  #
+  # @return [String]
+  #
   def to_tenji(text)
-    # 以下はサンプルの仮実装なので、このcase文は全部消して自作ロジックに書き直すこと
-    case text
-    when 'A HI RU'
-      <<~TENJI.chomp
-        o- o- oo
-        -- o- -o
-        -- oo --
-      TENJI
-    when 'KI RI N'
-      <<~TENJI.chomp
-        o- o- --
-        o- oo -o
-        -o -- oo
-      TENJI
-    when 'SI MA U MA'
-      <<~TENJI.chomp
-        o- o- oo o-
-        oo -o -- -o
-        -o oo -- oo
-      TENJI
-    when 'NI WA TO RI'
-      <<~TENJI.chomp
-        o- -- -o o-
-        o- -- oo oo
-        o- o- o- --
-      TENJI
-    when 'HI YO KO'
-      <<~TENJI.chomp
-        o- -o -o
-        o- -o o-
-        oo o- -o
-      TENJI
-    when 'KI TU NE'
-      <<~TENJI.chomp
-        o- oo oo
-        o- -o o-
-        -o o- o-
-      TENJI
+    charactors = text.split(' ')
+    tenjies = to_tenji_strings(charactors)
+    Renderer.render(tenjies)
+  end
+
+  private
+
+  #
+  # 点字文字列への変換
+  #
+  # @param [Array] charactors
+  #
+  # @return [Array]
+  #
+  def to_tenji_strings(charactors)
+    charactors.map do |charactor|
+      tenji = Tenji.new(charactor)
+      tenji.convert
     end
   end
 end
