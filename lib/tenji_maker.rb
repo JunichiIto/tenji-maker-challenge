@@ -18,7 +18,6 @@ class TenjiMaker
   # @param [String] text 点字に変換するローマ字の文章('A HI RU','KA RA SU' 等)
   # @return [String] 点字の間をスペースで区切った文字文字列
   def to_tenji(text)
-    romaji_char_array = text.split(' ')
     tenji_array = text.split(' ').map { |romaji_char|
       @tenji_generator.to_tenji_char_array(romaji_char)
     }
