@@ -15,30 +15,30 @@ class TenjiDoubleChar
   # @return [Array] 2要素*3行の点字配列
   def to_tenji_double_array(char)
     template = Array.new(TENJI_ROW_NUM) { Array.new(TENJI_COLUMN_NUM, '-') }
-    # MARK: 無駄にマージを利用している箇所を素直に定義する
     case char
-    when 'K' then
+    when 'K'
       template[2][1] = 'o'
-      template
-    when 'S' then
-      merge_tenji_array(to_tenji_double_array('K'), to_tenji_double_array('R'))
-    when 'T' then
-      merge_tenji_array(to_tenji_double_array('N'), to_tenji_double_array('R'))
-    when 'N' then
-      template[2][0] = 'o'
-      template
-    when 'H' then
-      merge_tenji_array(to_tenji_double_array('K'), to_tenji_double_array('N'))
-    when 'M' then
-      merge_tenji_array(to_tenji_double_array('H'), to_tenji_double_array('R'))
-    when 'R' then
+    when 'S'
       template[1][1] = 'o'
-      template
-    when 'Y' then
+      template[2][1] = 'o'
+    when 'T'
+      template[1][1] = 'o'
+      template[2][0] = 'o'
+    when 'N'
+      template[2][0] = 'o'
+    when 'H'
+      template[2][1] = 'o'
+      template[2][0] = 'o'
+    when 'M'
+      template[1][1] = 'o'
+      template[2][1] = 'o'
+      template[2][0] = 'o'
+    when 'R'
+      template[1][1] = 'o'
+    when 'Y'
       template[0][1] = 'o'
-      template
-    when 'W'
-      template
     end
+    # 'W'は全て'-'なのでtemplateをそのまま利用する
+    template
   end
 end

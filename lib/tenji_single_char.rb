@@ -14,27 +14,27 @@ class TenjiSingleChar
   # @return [Array] 2要素*3行の点字配列
   def to_tenji_single_array(char)
     template = Array.new(TENJI_ROW_NUM) { Array.new(TENJI_COLUMN_NUM, '-') }
-    # MARK: 無駄にマージを利用している箇所を素直に定義する
     case char
-    when 'A' then
+    when 'A'
       template[0][0] = 'o'
-      template
-    when 'I' then
+    when 'I'
+      template[0][0] = 'o'
       template[1][0] = 'o'
-      merge_tenji_array(to_tenji_single_array('A'), template)
-    when 'U' then
+    when 'U'
+      template[0][0] = 'o'
       template[0][1] = 'o'
-      merge_tenji_array(to_tenji_single_array('A'), template)
-    when 'E' then
-      merge_tenji_array(to_tenji_single_array('I'), to_tenji_single_array('U'))
-    when 'O' then
+    when 'E'
+      template[0][0] = 'o'
+      template[1][0] = 'o'
+      template[0][1] = 'o'
+    when 'O'
       template[0][1] = 'o'
       template[1][0] = 'o'
-      template
-    when 'N' then
-      # 'E'の点字配列を上下反転、左右反転させる
-      # https://mebee.info/2020/12/15/post-23548/
-      to_tenji_single_array('E').reverse.map(&:reverse)
+    when 'N'
+      template[1][1] = 'o'
+      template[2][0] = 'o'
+      template[2][1] = 'o'
     end
+    template
   end
 end
