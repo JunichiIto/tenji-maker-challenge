@@ -1,7 +1,6 @@
 require_relative '../lib/tenji_handler'
 
 # MARK: オブジェクト指向のアンチパターンとなっている箇所の改修
-# MARK: クラス名を子音のクラスとする
 # 2文字で成立するローマ字の子音部分を点字配列に変換するクラス
 class TenjiSiinChar
   include TenjiHandler
