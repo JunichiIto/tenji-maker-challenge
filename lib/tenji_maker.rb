@@ -1,8 +1,6 @@
 class TenjiMaker
   def to_tenji(text)
     read_and_output(text)
-    string = @tenji_str1.rstrip + "\n" <<  @tenji_str2.rstrip + "\n" << @tenji_str3.rstrip
-    string
   end
   
   def judge_others_text(text,number)
@@ -94,5 +92,8 @@ class TenjiMaker
     judge_mother_text(text, num * 3)
     judge_others_text(text, num * 3)
    end
+   string = @tenji_str1.rstrip + "\n" <<  @tenji_str2.rstrip + "\n" << @tenji_str3.rstrip
+   string
   end
+  
 end
