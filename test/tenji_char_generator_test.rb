@@ -401,4 +401,13 @@ class TenjiCharGeneratorTest < Minitest::Test
       o-
     TENJI
   end
+
+  def test_n
+    tenji = @tenji_generator.to_tenji_char_array('N')
+    assert_equal <<~TENJI.chomp, @tenji_generator.show_tenji(tenji)
+      --
+      -o
+      oo
+    TENJI
+  end
 end
