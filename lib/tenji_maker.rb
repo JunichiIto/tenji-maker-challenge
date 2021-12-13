@@ -1,43 +1,50 @@
+# frozen_string_literal: true
+
 class TenjiMaker
+  FIRST_CONVERSION_TABLE = {
+    'A' => [0],
+    'I' => [0, 1],
+    'U' => [0, 3],
+    'E' => [0, 1, 3],
+    'O' => [1, 3],
+    'N' => [2, 4, 5],
+    'Y' => [3]
+  }.freeze
+
+  SECOND_CONVERSION_TABLE = {
+    'K' => [5],
+    'S' => [4, 5],
+    'T' => [2, 4],
+    'N' => [2],
+    'H' => [2, 5],
+    'M' => [2, 4, 5],
+    'R' => [4],
+    'A' => [2],
+    'U' => [2, 5],
+    'O' => [2, 4]
+  }.freeze
+
   def to_tenji(text)
-    # 以下はサンプルの仮実装なので、このcase文は全部消して自作ロジックに書き直すこと
-    case text
-    when 'A HI RU'
-      <<~TENJI.chomp
-        o- o- oo
-        -- o- -o
-        -- oo --
-      TENJI
-    when 'KI RI N'
-      <<~TENJI.chomp
-        o- o- --
-        o- oo -o
-        -o -- oo
-      TENJI
-    when 'SI MA U MA'
-      <<~TENJI.chomp
-        o- o- oo o-
-        oo -o -- -o
-        -o oo -- oo
-      TENJI
-    when 'NI WA TO RI'
-      <<~TENJI.chomp
-        o- -- -o o-
-        o- -- oo oo
-        o- o- o- --
-      TENJI
-    when 'HI YO KO'
-      <<~TENJI.chomp
-        o- -o -o
-        o- -o o-
-        oo o- -o
-      TENJI
-    when 'KI TU NE'
-      <<~TENJI.chomp
-        o- oo oo
-        o- -o o-
-        -o o- o-
-      TENJI
+    moras = text.split(' ')
+    squares = dot(moras)
+    format_tenji(squares)
+  end
+
+  private
+
+  def dot(moras)
+    moras.map do |mora|
+      square = Array.new(6) { '-' }
+      first_char, second_char = mora.start_with?(/[WY]/) ? mora.chars : mora.chars.reverse
+
+      FIRST_CONVERSION_TABLE[first_char]&.each { |i| square[i] = 'o' }
+      SECOND_CONVERSION_TABLE[second_char]&.each { |i| square[i] = 'o' }
+      square
     end
+  end
+
+  def format_tenji(squares)
+    transposed_squares = squares.map { |square| square.each_slice(3).to_a.transpose.map(&:join) }
+    transposed_squares.transpose.map { |rows| rows.join(' ') }.join("\n")
   end
 end
