@@ -24,13 +24,8 @@ class TenjiMaker
       to_tenji_each_char(roman_char)
     end
 
-    top, middle, bottom = split_three_row(one_line_tenji_array)
-
-    <<~TENJI.chomp
-      #{top.join(' ')}
-      #{middle.join(' ')}
-      #{bottom.join(' ')}
-    TENJI
+    three_rows = split_three_row(one_line_tenji_array)
+    three_rows.map { _1.join(' ') }.join("\n")
   end
 
   private
@@ -43,7 +38,7 @@ class TenjiMaker
       push_to_row.call(middle, one_line_tenji, 2)
       push_to_row.call(bottom, one_line_tenji, 4)
     end
-    return top, middle, bottom
+    [top, middle, bottom]
   end
 
   def to_tenji_each_char(roman_char)
