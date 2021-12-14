@@ -1,9 +1,37 @@
 require_relative '../lib/tenji_handler'
 
-# MARK: オブジェクト指向のアンチパターンとなっている箇所の改修
 # ローマ字1文字を点字配列に変換するクラス
 class TenjiCharGenerator
   include TenjiHandler
+
+  # 母音の点字の位置
+  VOWEL_TENJI_POINT = {
+    'A' => [1],
+    'I' => [1, 2],
+    'U' => [1, 4],
+    'E' => [1, 2, 4],
+    'O' => [2, 4]
+  }.freeze
+
+  # 子音の点字の位置
+  CONSONANT_TENJI_POINT = {
+    'K' => [6],
+    'S' => [5, 6],
+    'T' => [3, 5],
+    'N' => [3],
+    'H' => [3, 6],
+    'M' => [3, 5, 6],
+    'R' => [5]
+  }.freeze
+
+  # 例外として処理する点字の位置
+  EXCEPTION_TENJI_POINT = {
+    'YA' => [3, 4],
+    'YU' => [3, 4, 6],
+    'YO' => [3, 4, 5],
+    'WA' => [3],
+    'N' => [3, 5, 6]
+  }.freeze
 
   # 点字に変換したいローマ字1文字から点字配列を取得する
   #
@@ -13,86 +41,16 @@ class TenjiCharGenerator
   # @param [String] romaji_char 点字配列に変換するローマ字1文字('A','KA','WA' 等)
   # @return [Array] 2要素*3行の点字配列
   def to_tenji_char_array(romaji_char)
-    tenji_single_array = to_tenji_single_array(romaji_char[-1])
-    return tenji_single_array if romaji_char.length == 1
-
-    tenji_siin_array = to_tenji_siin_array(romaji_char[0])
-    case romaji_char
-    when "YA", "YU", "WA" then
-      merge_tenji_array(tenji_siin_array, tenji_single_array.reverse)
-    when "YO" then
-      merge_tenji_array(tenji_siin_array, tenji_single_array.rotate(-1))
-    else
-      merge_tenji_array(tenji_siin_array, tenji_single_array)
-    end
+    return generate_tenji_array(EXCEPTION_TENJI_POINT[romaji_char]) if EXCEPTION_TENJI_POINT.has_key?(romaji_char)
+    return generate_tenji_array(VOWEL_TENJI_POINT[romaji_char]) if VOWEL_TENJI_POINT.has_key?(romaji_char)
+    merge_tenji_array(generate_tenji_array(CONSONANT_TENJI_POINT[romaji_char[0]]), generate_tenji_array(VOWEL_TENJI_POINT[romaji_char[1]]))
   end
 
-  # 1文字で成立するローマ字から点字配列を取得する
-  #
-  # @example 'A'を点字配列に変換する
-  #   to_tenji_single_array('A') #=> [['o', '-'], ['-', '-'], ['-', '-']]
-  #
-  # @param [String] char 点字配列に変換する1文字
-  # @return [Array] 2要素*3行の点字配列
-  def to_tenji_single_array(char)
-    template = Array.new(TENJI_ROW_NUM) { Array.new(TENJI_COLUMN_NUM, '-') }
-    case char
-    when 'A'
-      template[0][0] = 'o'
-    when 'I'
-      template[0][0] = 'o'
-      template[1][0] = 'o'
-    when 'U'
-      template[0][0] = 'o'
-      template[0][1] = 'o'
-    when 'E'
-      template[0][0] = 'o'
-      template[1][0] = 'o'
-      template[0][1] = 'o'
-    when 'O'
-      template[0][1] = 'o'
-      template[1][0] = 'o'
-    when 'N'
-      template[1][1] = 'o'
-      template[2][0] = 'o'
-      template[2][1] = 'o'
-    end
-    template
+  # 点字の点から点字配列を作成する
+  def generate_tenji_array(tenji_points)
+    template = Array.new(TENJI_COLUMN_NUM * TENJI_ROW_NUM, '-')
+    flat_tenji_array = template.map.with_index{ |elem, idx| tenji_points.include?(idx + 1) ? 'o' : elem }
+    (0..TENJI_ROW_NUM).map { |idx| [flat_tenji_array[idx], flat_tenji_array[idx + TENJI_ROW_NUM]] }
   end
 
-  # 2文字で成立するローマ字の子音部分から点字配列を取得する
-  #
-  # @example 'K'を点字配列に変換する
-  #   to_tenji_siin_array('K') #=> [['-', '-'], ['-', '-'], ['-', 'o']]
-  #
-  # @param [String] char 点字配列に変換する1文字
-  # @return [Array] 2要素*3行の点字配列
-  def to_tenji_siin_array(char)
-    template = Array.new(TENJI_ROW_NUM) { Array.new(TENJI_COLUMN_NUM, '-') }
-    case char
-    when 'K'
-      template[2][1] = 'o'
-    when 'S'
-      template[1][1] = 'o'
-      template[2][1] = 'o'
-    when 'T'
-      template[1][1] = 'o'
-      template[2][0] = 'o'
-    when 'N'
-      template[2][0] = 'o'
-    when 'H'
-      template[2][1] = 'o'
-      template[2][0] = 'o'
-    when 'M'
-      template[1][1] = 'o'
-      template[2][1] = 'o'
-      template[2][0] = 'o'
-    when 'R'
-      template[1][1] = 'o'
-    when 'Y'
-      template[0][1] = 'o'
-    end
-    # 'W'は全て'-'なのでtemplateをそのまま利用する
-    template
-  end
 end
