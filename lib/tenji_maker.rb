@@ -10,8 +10,8 @@ class TenjiMaker
     case letter
     when /^[YW]/
       letter.capitalize
-    when /^[AIUEO]/
-      letter.rjust(2,'_')
+    when /.[Y]/
+      letter.sub(/Y/,'y')
     when /N$/
       letter.rjust(2,letter).downcase
     else
@@ -27,8 +27,9 @@ class TenjiMaker
       'n'=>0b000111, '_'=>0b000000, 
     }
   def translate(letter)
-    c, v = letter.scan(/./)
-    (TB[c] | TB[v]).to_s(2).rjust(6,'0').gsub('0','-').gsub('1','o')
+    val = letter.scan(/./).map{|c| TB[c]}.inject(:|).to_s(2)
+    len = (val.length > 6) ? 12 : 6
+    (val.chars.map &{"0"=>"-","1"=>"o"}).join.rjust(len,'-')
   end
 
   def split_and_normalize_letter(text)
@@ -36,7 +37,7 @@ class TenjiMaker
   end
   
   def translate_letters_to_tenji(letters)
-    letters.map {|letter| translate letter}
+    letters.map {|letter| (translate letter).scan(/.{6}/)}.flatten
   end
 
   def render(tenji)
