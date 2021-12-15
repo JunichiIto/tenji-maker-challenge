@@ -33,6 +33,12 @@ class TenjiCharGenerator
     'N' => [3, 5, 6]
   }.freeze
 
+  # 点字->BITの変換定義
+  TENJI_BIT = {
+    'o' => 0b1,
+    '-' => 0b0,
+  }
+
   # 点字に変換したいローマ字1文字から点字配列を取得する
   #
   # @example 'KA'を点字配列に変換する
@@ -78,11 +84,10 @@ class TenjiCharGenerator
   # @param [Array] row_array_b 2要素の点字行配列の2つ目
   # @return [Array] 引数をマージした結果の2要素の点字行配列
   def merge_tenji_row(row_array_a, row_array_b)
-    return row_array_a if row_array_a == row_array_b
     (0...TENJI_COLUMN_NUM).map { |elem_idx|
-      # MARK: bit演算を利用する
       # 同じ位置の要素に'o'がある場合は、その要素に'o'を反映させた配列を作成する
-      row_array_a[elem_idx] == 'o' || row_array_b[elem_idx] == 'o' ? 'o' : '-'
+      # 1.点字->BIT, 2.BITのOR演算 3.BIT->点字 の流れで変換する
+      TENJI_BIT.invert[TENJI_BIT[row_array_a[elem_idx]] | TENJI_BIT[row_array_b[elem_idx]]]
     }
   end
 
