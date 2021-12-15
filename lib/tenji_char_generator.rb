@@ -52,7 +52,14 @@ class TenjiCharGenerator
     merge_tenji_array(generate_tenji_array(CONSONANT_TENJI_POINT[romaji_char[0]]), generate_tenji_array(VOWEL_TENJI_POINT[romaji_char[1]]))
   end
 
-  # 点字の点から点字配列を作成する
+  # 指定した位置に点を打った点字配列を作成する
+  #
+  # @example 3,5,6の位置に点を打った点字配列を取得する
+  #   generate_tenji_array([3,5,6])
+  #   #=> [['-', '-'], ['o', '-'], ['o', 'o']]
+  #
+  # @param [Array] tenji_points 点を打つ位置を定義した配列
+  # @return [Array] 2要素*3行の点字配列
   def generate_tenji_array(tenji_points)
     template = Array.new(TENJI_COLUMN_NUM * TENJI_ROW_NUM, '-')
     flat_tenji_array = template.map.with_index{ |elem, idx| tenji_points.include?(idx + 1) ? 'o' : elem }
