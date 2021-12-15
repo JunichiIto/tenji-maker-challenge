@@ -1,5 +1,5 @@
 class TenjiMaker
-  def to_tenji(text)
+  def to_tenji(text) 
     # 以下はサンプルの仮実装なので、このcase文は全部消して自作ロジックに書き直すこと
     case text
     when 'A HI RU'
