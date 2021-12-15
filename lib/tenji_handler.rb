@@ -31,36 +31,4 @@ module TenjiHandler
     tenji_rows.map{ |tenji_row| tenji_row.strip }.join("\n")
   end
 
-  # 2つの点字配列をマージした新たな点字配列を取得する
-  #
-  # @example [['-', '-'], ['-', '-'], ['-', 'o']], [['o', '-'], ['-', '-'], ['-', '-']]をマージした点字配列を取得
-  #   merge_tenji_array([['-', '-'], ['-', '-'], ['-', 'o']], [['o', '-'], ['-', '-'], ['-', '-']])
-  #   #=> [['o', '-'], ['-', '-'], ['-', 'o']]
-  #
-  # @param [Array] tenji_array_a 2要素*3行の点字配列の1つ目
-  # @param [Array] tenji_array_b 2要素*3行の点字配列の2つ目
-  # @return [Array] 引数をマージした結果の2要素*3行の点字配列
-  def merge_tenji_array(tenji_array_a, tenji_array_b)
-    tenji_array_a.zip(tenji_array_b).map { |rows| 
-      # 同じ位置にある行の点字配列をマージする
-      rows.inject { |result, row| merge_tenji_row(result, row) }
-    }
-  end
-
-  # 2つの点字行配列を比較し、2つの行内で'o'が含まれている点を反映させた新たな点字行配列を取得する
-  #
-  # @example ['-', 'o'], ['o', '-']から新たな点字行配列を取得
-  #   merge_tenji_row(['-', 'o'], ['o', '-']) #=> ['o', 'o']
-  #
-  # @param [Array] row_array_a 2要素の点字行配列の1つ目
-  # @param [Array] row_array_b 2要素の点字行配列の2つ目
-  # @return [Array] 引数をマージした結果の2要素の点字行配列
-  def merge_tenji_row(row_array_a, row_array_b)
-    return row_array_a if row_array_a == row_array_b
-    (0...TENJI_COLUMN_NUM).map { |elem_idx|
-      # MARK: bit演算を利用する
-      # 同じ位置の要素に'o'がある場合は、その要素に'o'を反映させた配列を作成する
-      row_array_a[elem_idx] == 'o' || row_array_b[elem_idx] == 'o' ? 'o' : '-'
-    }
-  end
 end
