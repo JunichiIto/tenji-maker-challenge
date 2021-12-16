@@ -1,5 +1,7 @@
 class TenjiMaker
   TENJI_INITIAL = ['-', '-', '-', '-', '-', '-']
+  TENJI_EXCEPTIONAL = {'YA' => [2,3], 'YU' => [2,3,5], 'YO' => [2,3,4], 'WA' => [2], 'N' => [2,4,5]}
+  TENJI_NORMAL = {'A' => [0], 'I' => [0,1], 'U' => [0,3], 'E' => [0,1,3], 'O' => [1,3], 'K' => [5], 'S' => [4,5], 'T' => [2,4], 'N' => [2], 'H' => [2,5], 'M' => [2,4,5], 'R' => [4]}
 
   def to_tenji(text)
     split_text = text.split(' ')
@@ -7,75 +9,24 @@ class TenjiMaker
     tenji_letters = set_tenji_initial(split_text.length)
 
     split_text.each_with_index do |letters, index|
-      mark_tenji(letters, tenji_letters[index])
+      if TENJI_EXCEPTIONAL.keys.include?(letters)
+        mark_tenji_exceptional(letters, tenji_letters[index])
+      else
+        mark_tenji_normal(letters, tenji_letters[index])
+      end
     end
-    
     format_tenji_for_output(tenji_letters)
   end
 
-  def mark_tenji(letters, tenji_letter)
-    case letters
-    when 'YA'
-      tenji_letter[2] = 'o'
-      tenji_letter[3] = 'o'
-      return
-    when 'YU'
-      tenji_letter[2] = 'o'
-      tenji_letter[3] = 'o'
-      tenji_letter[5] = 'o'
-    when 'YO'
-      tenji_letter[2] = 'o'
-      tenji_letter[3] = 'o'
-      tenji_letter[4] = 'o'
-      return
-    when 'WA'
-      tenji_letter[2] = 'o'
-      return
-    when 'N'
-      tenji_letter[2] = 'o'
-      tenji_letter[4] = 'o'
-      tenji_letter[5] = 'o'
-      return
+  def mark_tenji_exceptional(letters, tenji_letter)
+    TENJI_EXCEPTIONAL[letters].map{ |num| tenji_letter[num] = 'o'}
+  end
+
+  def mark_tenji_normal(letters, tenji_letter)
+    letters.each_char do |letter|
+      TENJI_NORMAL[letter].map{ |num| tenji_letter[num] = 'o'}
     end
 
-    letters.each_char do |l|
-      case l
-      when 'A'
-        tenji_letter[0] = 'o'
-      when 'I'
-        tenji_letter[0] = 'o'
-        tenji_letter[1] = 'o'
-      when 'U'
-        tenji_letter[0] = 'o'
-        tenji_letter[3] = 'o'
-      when 'E'
-        tenji_letter[0] = 'o'
-        tenji_letter[1] = 'o'
-        tenji_letter[3] = 'o'
-      when 'O'
-        tenji_letter[1] = 'o'
-        tenji_letter[3] = 'o'
-      when 'K'
-        tenji_letter[5] = 'o'
-      when 'S'
-        tenji_letter[4] = 'o'
-        tenji_letter[5] = 'o'
-      when 'T'
-        tenji_letter[2] = 'o'
-        tenji_letter[4] = 'o'
-      when 'N'
-        tenji_letter[2] = 'o'
-      when 'H'
-        tenji_letter[2] = 'o'
-        tenji_letter[5] = 'o'
-      when 'M'
-        tenji_letter[2] = 'o'
-        tenji_letter[4] = 'o'
-        tenji_letter[5] = 'o'
-      when 'R'
-        tenji_letter[4] = 'o'
-      end
-    end
   end
 
   def set_tenji_initial(num)
