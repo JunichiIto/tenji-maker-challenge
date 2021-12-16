@@ -15,10 +15,8 @@ class TenjiMaker
     answer = []
     output.map{|o| answer << [o[0] + o[1], o[2] + o[3], o[4]+ o[5]]}
 
-    answer = answer.transpose
-    answer.each do |a|
-      puts a.join(" ")
-    end
+    answer.transpose.map { |a| a.join(" ")}.join("\n")
+
   end
   def mark_tenji(letter, tenji_letter)
     case letter
@@ -38,6 +36,10 @@ class TenjiMaker
     when 'WA'
       tenji_letter[4] = 'o'
       return
+    when 'N'
+      tenji_letter[3] = 'o'
+      tenji_letter[4] = 'o'
+      tenji_letter[5] = 'o'
     end
 
     letter.each_char do |l|
@@ -64,7 +66,7 @@ class TenjiMaker
         tenji_letter[5] = 'o'
       when 'T'
         tenji_letter[3] = 'o'
-        tenji_letter[5] = 'o'
+        tenji_letter[4] = 'o'
       when 'N'
         tenji_letter[4] = 'o'
       when 'H'
@@ -80,4 +82,3 @@ class TenjiMaker
     end
   end
 end
-
