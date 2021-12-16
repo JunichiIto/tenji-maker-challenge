@@ -10,6 +10,9 @@ module Dictionary
     SPACE = ' '
 
     class << self
+      # 空白を表すMatrixを返す
+      #
+      # @return [Matrix] 空白を表すMatrix
       def space
         Matrix[[SPACE], [SPACE], [SPACE]]
       end
