@@ -1,7 +1,10 @@
 require_relative '../lib/tenji_char_generator'
+require_relative '../lib/tenji_handler'
 
 # 文字列を点字に変換するクラス
 class TenjiMaker
+  include TenjiHandler
+
   # コンストラクタ
   def initialize 
     @tenji_generator = TenjiCharGenerator.new
@@ -21,7 +24,7 @@ class TenjiMaker
     tenji_array = text.split(' ').map { |romaji_char|
       @tenji_generator.to_tenji_char_array(romaji_char)
     }
-    @tenji_generator.show_tenji(tenji_array)
+    show_tenji(tenji_array)
   end
 
 end

@@ -1,43 +1,8 @@
-require_relative '../lib/tenji_handler'
+require_relative '../lib/tenji_constant'
 
 # ローマ字1文字を点字配列に変換するクラス
 class TenjiCharGenerator
-  include TenjiHandler
-
-  # 母音の点字の位置
-  VOWEL_TENJI_POINT = {
-    'A' => [1],
-    'I' => [1, 2],
-    'U' => [1, 4],
-    'E' => [1, 2, 4],
-    'O' => [2, 4]
-  }.freeze
-
-  # 子音の点字の位置
-  CONSONANT_TENJI_POINT = {
-    'K' => [6],
-    'S' => [5, 6],
-    'T' => [3, 5],
-    'N' => [3],
-    'H' => [3, 6],
-    'M' => [3, 5, 6],
-    'R' => [5]
-  }.freeze
-
-  # 例外として処理する点字の位置
-  EXCEPTION_TENJI_POINT = {
-    'YA' => [3, 4],
-    'YU' => [3, 4, 6],
-    'YO' => [3, 4, 5],
-    'WA' => [3],
-    'N' => [3, 5, 6]
-  }.freeze
-
-  # 点字->BITの変換定義
-  TENJI_BIT = {
-    'o' => 0b1,
-    '-' => 0b0,
-  }
+  include TenjiConstant
 
   # 点字に変換したいローマ字1文字から点字配列を取得する
   #
@@ -63,7 +28,7 @@ class TenjiCharGenerator
   def generate_tenji_array(tenji_points)
     template = Array.new(TENJI_COLUMN_NUM * TENJI_ROW_NUM, '-')
     flat_tenji_array = template.map.with_index{ |elem, idx| tenji_points.include?(idx + 1) ? 'o' : elem }
-    (0..TENJI_ROW_NUM).map { |idx| [flat_tenji_array[idx], flat_tenji_array[idx + TENJI_ROW_NUM]] }
+    (0...TENJI_ROW_NUM).map { |idx| [flat_tenji_array[idx], flat_tenji_array[idx + TENJI_ROW_NUM]] }
   end
 
   # 2つの点字配列をマージした新たな点字配列を取得する

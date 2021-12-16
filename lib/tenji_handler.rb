@@ -1,9 +1,8 @@
+require_relative '../lib/tenji_constant'
+
 # 配列を点字に変換するモジュール
 module TenjiHandler
-  # 点字の列数
-  TENJI_COLUMN_NUM = 2
-  # 点字の列数
-  TENJI_ROW_NUM = 3
+  include TenjiConstant
 
   # 点字配列を文字列として整形して表示する
   #
