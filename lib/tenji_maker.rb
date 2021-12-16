@@ -26,7 +26,6 @@ class TenjiMaker
     letters.each_char do |letter|
       TENJI_NORMAL[letter].map{ |num| tenji_letter[num] = 'o'}
     end
-
   end
 
   def set_tenji_initial(num)
