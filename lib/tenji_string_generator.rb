@@ -1,20 +1,20 @@
 require_relative '../lib/tenji_constant'
 
-# 配列を点字に変換するモジュール
-module TenjiHandler
+# 点字配列を点字文字列に変換するクラス
+class TenjiStringGenerator
   include TenjiConstant
 
   # 点字配列を文字列として整形して表示する
   #
   # @example [[['o', '-'], ['-', '-'], ['-', 'o']], [['o', '-'], ['-', 'o'], ['-', '-']], [['o', 'o'], ['-', 'o'], ['-', 'o']]]を点字として表示
-  #   show_tenji([['-', '-'], ['-', '-'], ['-', 'o']], [['o', '-'], ['-', '-'], ['-', '-']])
+  #   to_tenji_string([['-', '-'], ['-', '-'], ['-', 'o']], [['o', '-'], ['-', '-'], ['-', '-']])
   #   #=> o- o- oo
   #       -- -o -o
   #       -o -- -o
   #
   # param [Array] 文字列を点字配列に変換したデータを保持する配列
   # return [String] 点字の文字列
-  def show_tenji(tenji_array)
+  def to_tenji_string(tenji_array)
     # 1文字だけの点字かどうか判断
     is_single_tenji = tenji_array[0][0].kind_of?(String)
     # 点字は3行で構成されているので、各行でループする
