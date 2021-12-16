@@ -16,23 +16,23 @@ class TenjiMaker
   def mark_tenji(letters, tenji_letter)
     case letters
     when 'YA'
-      tenji_letter[1] = 'o'
-      tenji_letter[4] = 'o'
+      tenji_letter[2] = 'o'
+      tenji_letter[3] = 'o'
       return
     when 'YU'
-      tenji_letter[1] = 'o'
-      tenji_letter[4] = 'o'
+      tenji_letter[2] = 'o'
+      tenji_letter[3] = 'o'
       tenji_letter[5] = 'o'
     when 'YO'
-      tenji_letter[1] = 'o'
+      tenji_letter[2] = 'o'
       tenji_letter[3] = 'o'
       tenji_letter[4] = 'o'
       return
     when 'WA'
-      tenji_letter[4] = 'o'
+      tenji_letter[2] = 'o'
       return
     when 'N'
-      tenji_letter[3] = 'o'
+      tenji_letter[2] = 'o'
       tenji_letter[4] = 'o'
       tenji_letter[5] = 'o'
       return
@@ -44,36 +44,36 @@ class TenjiMaker
         tenji_letter[0] = 'o'
       when 'I'
         tenji_letter[0] = 'o'
-        tenji_letter[2] = 'o'
+        tenji_letter[1] = 'o'
       when 'U'
         tenji_letter[0] = 'o'
-        tenji_letter[1] = 'o'
+        tenji_letter[3] = 'o'
       when 'E'
         tenji_letter[0] = 'o'
         tenji_letter[1] = 'o'
-        tenji_letter[2] = 'o'
+        tenji_letter[3] = 'o'
       when 'O'
         tenji_letter[1] = 'o'
-        tenji_letter[2] = 'o'
+        tenji_letter[3] = 'o'
       when 'K'
         tenji_letter[5] = 'o'
       when 'S'
-        tenji_letter[3] = 'o'
+        tenji_letter[4] = 'o'
         tenji_letter[5] = 'o'
       when 'T'
-        tenji_letter[3] = 'o'
+        tenji_letter[2] = 'o'
         tenji_letter[4] = 'o'
       when 'N'
-        tenji_letter[4] = 'o'
+        tenji_letter[2] = 'o'
       when 'H'
-        tenji_letter[4] = 'o'
+        tenji_letter[2] = 'o'
         tenji_letter[5] = 'o'
       when 'M'
-        tenji_letter[3] = 'o'
+        tenji_letter[2] = 'o'
         tenji_letter[4] = 'o'
         tenji_letter[5] = 'o'
       when 'R'
-        tenji_letter[3] = 'o'
+        tenji_letter[4] = 'o'
       end
     end
   end
@@ -88,7 +88,8 @@ class TenjiMaker
 
   def format_tenji_for_output(tenji_letters)
     tenji_letters_for_output = []
-    tenji_letters.map{|o| tenji_letters_for_output << [o[0] + o[1], o[2] + o[3], o[4]+ o[5]]}
+    tenji_letters.map{ |letter| tenji_letters_for_output << [letter[0] + letter[3], letter[1] + letter[4], letter[2]+ letter[5]]}
     tenji_letters_for_output.transpose.map { |a| a.join(" ")}.join("\n")
   end
+
 end
