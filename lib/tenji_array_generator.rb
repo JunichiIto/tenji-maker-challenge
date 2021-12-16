@@ -1,7 +1,7 @@
 require_relative '../lib/tenji_constant'
 
 # ローマ字1文字を点字配列に変換するクラス
-class TenjiCharGenerator
+class TenjiArrayGenerator
   include TenjiConstant
 
   # 点字に変換したいローマ字1文字から点字配列を取得する
