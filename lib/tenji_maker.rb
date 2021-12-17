@@ -15,11 +15,8 @@ class TenjiMaker
   #
   # @param [String] text 文字列(空白区切りのローマ字)
   def to_tenji(text)
-    # ローマ字を点字形式Matrixへ変換
     matrices = text.split(SEPARATOR).map { |s| Dictionary::Tenji.to_m(s) }
-    # 空白を意味するMatrixとの交互に並べた配列を生成
-    matrices = matrices.zip([Dictionary::Symbol.space] * matrices.size).flatten
-    # 末尾の余分な空白を意味するMatrixを除去
+    matrices = matrices.zip([Dictionary::Symbol.to_m(SEPARATOR)] * matrices.size).flatten
     matrices.pop
 
     Converter.to_tenji(matrices)
