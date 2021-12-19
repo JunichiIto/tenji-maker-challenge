@@ -36,16 +36,10 @@ class ExtendTranslate
     private
 
     def stringify_character_tenji(binary)
-      chars = format('%06B', binary).each_char.map do |char|
-        if char == "1"
-          char.gsub!("1", 'o')
-        elsif char == "0"
-          char.gsub!("0", '-')
-        end
-      end
+      chars = format('%06B', binary).each_char.map { |char| char.tr("1", "o").tr("0", "-") }
     end
   
-    def stringify_characters_tenji(word)
+    def stringify_two_characters_tenji(word)
       word_key, consonant_key, vowel_key = word.upcase.to_sym, word[0].upcase.to_sym, word[1].upcase.to_sym
       if EXCEPT_CONSONANT.include?(consonant_key)
         return stringify_character_tenji(DEFINE_CONSONANT[consonant_key][word_key])
