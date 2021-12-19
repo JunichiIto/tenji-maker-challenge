@@ -66,21 +66,21 @@ class TenjiMakerTest < Minitest::Test
 
   def test_a_binary
     binary_letter = @tenji_maker.send(:letter_to_binary, 'A')
-    assert_equal binary_letter, [1, 0, 0, 0, 0, 0]
+    assert_equal [1, 0, 0, 0, 0, 0], binary_letter
   end
 
   def test_ki_binary
     binary_letter = @tenji_maker.send(:letter_to_binary, 'KI')
-    assert_equal binary_letter, [1, 1, 0, 0, 0, 1]
+    assert_equal [1, 1, 0, 0, 0, 1], binary_letter
   end
 
   def test_n_binary
     binary_letter = @tenji_maker.send(:letter_to_binary, 'N')
-    assert_equal binary_letter, [0, 0, 1, 0, 1, 1]
+    assert_equal [0, 0, 1, 0, 1, 1], binary_letter
   end
 
   def test_ya_binary
     binary_letter = @tenji_maker.send(:letter_to_binary, 'YA')
-    assert_equal binary_letter, [0, 0, 1, 1, 0, 0]
+    assert_equal [0, 0, 1, 1, 0, 0], binary_letter
   end
 end
