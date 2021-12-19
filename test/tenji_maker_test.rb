@@ -65,47 +65,47 @@ class TenjiMakerTest < Minitest::Test
   # 独自のテストパターンを追加するのは自由です
 
   def test_a_binary
-    binary_letter = @tenji_maker.send(:letter_to_binary, 'A')
+    binary_letter = @tenji_maker.send(:letter_to_tenji_binary, 'A')
     assert_equal [1, 0, 0, 0, 0, 0], binary_letter
   end
 
   def test_ki_binary
-    binary_letter = @tenji_maker.send(:letter_to_binary, 'KI')
+    binary_letter = @tenji_maker.send(:letter_to_tenji_binary, 'KI')
     assert_equal [1, 1, 0, 0, 0, 1], binary_letter
   end
 
   def test_su_binary
-    binary_letter = @tenji_maker.send(:letter_to_binary, 'SU')
+    binary_letter = @tenji_maker.send(:letter_to_tenji_binary, 'SU')
     assert_equal [1, 0, 0, 1, 1, 1], binary_letter
   end
 
   def test_te_binary
-    binary_letter = @tenji_maker.send(:letter_to_binary, 'TE')
+    binary_letter = @tenji_maker.send(:letter_to_tenji_binary, 'TE')
     assert_equal [1, 1, 1, 1, 1, 0], binary_letter
   end
 
   def test_no_binary
-    binary_letter = @tenji_maker.send(:letter_to_binary, 'NO')
+    binary_letter = @tenji_maker.send(:letter_to_tenji_binary, 'NO')
     assert_equal [0, 1, 1, 1, 0, 0], binary_letter
   end
 
   def test_ha_binary
-    binary_letter = @tenji_maker.send(:letter_to_binary, 'HA')
+    binary_letter = @tenji_maker.send(:letter_to_tenji_binary, 'HA')
     assert_equal [1, 0, 1, 0, 0, 1], binary_letter
   end
 
   def test_mi_binary
-    binary_letter = @tenji_maker.send(:letter_to_binary, 'MI')
+    binary_letter = @tenji_maker.send(:letter_to_tenji_binary, 'MI')
     assert_equal [1, 1, 1, 0, 1, 1], binary_letter
   end
 
   def test_n_binary
-    binary_letter = @tenji_maker.send(:letter_to_binary, 'N')
+    binary_letter = @tenji_maker.send(:letter_to_tenji_binary, 'N')
     assert_equal [0, 0, 1, 0, 1, 1], binary_letter
   end
 
   def test_ya_binary
-    binary_letter = @tenji_maker.send(:letter_to_binary, 'YA')
+    binary_letter = @tenji_maker.send(:letter_to_tenji_binary, 'YA')
     assert_equal [0, 0, 1, 1, 0, 0], binary_letter
   end
 end
