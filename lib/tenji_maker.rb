@@ -1,43 +1,43 @@
 require 'constants'
-require 'byebug'
 
 class TenjiMaker
   def to_tenji(text)
     letters = text.split(' ')
-    binary_letters = letters.map { |letter| to_tenji_binary_leter(letter) }
-    binary_letters.transpose.inject([]) { |result, item|
-      result << to_tenji_line(item)
-    }.join("\n")
+    tenji_binary_letters = letters.map { |letter| letter_to_tenji_binary(letter) }
+    tenji_binaries_matrix = tenji_binaries_to_matrix(tenji_binary_letters)
+    matrix_to_tenji(tenji_binaries_matrix)
   end
 
   private
 
-  # NOTE: 文字から３行2列で点の有無を1,0で表現した点字用の行列を作成
-  # 例) "KI" => [[1, 0], [1, 0], [0, 1]]
-  def to_tenji_binary_leter(letter)
-    return IRREGULARS[letter.to_sym].each_slice(2).to_a if letter.match?(/W|Y|N$/)
-
-    vowel = letter[-1]
-    if letter.length == 1
-      VOWELS[vowel.to_sym] + [0, 0, 0]
-    else
-      consonant = letter[0]
-      VOWELS[vowel.to_sym] + CONSONANTS[consonant.to_sym]
-    end.each_slice(2).to_a
+  def matrix_to_tenji(tenji_binaries_matrix)
+    tenji_binaries_matrix.map do |binary_array|
+      binary_array_to_tenji_line(binary_array)
+    end.join("\n")
   end
 
-  def to_dot(int)
-    case int
-    when 0
-      '-'
-    when 1
-      'o'
-    end
-  end
-
-  def to_tenji_line(binary_line)
-    binary_line.inject([]) { |result, item|
-      result << item.inject('') { |r, binary| r + to_dot(binary) }
+  def binary_array_to_tenji_line(binary_array)
+    binary_array.map { |bin|
+      bin.inject('') { |result, b| result + binary_to_dot(b) }
     }.join(' ')
+  end
+
+  def binary_to_dot(binary)
+    binary.zero? ? '-' : 'o'
+  end
+
+  def tenji_binaries_to_matrix(tenji_binaries)
+    tenji_binaries.map { |letter|
+      letter.each_slice(3).to_a.transpose
+    }.transpose
+  end
+
+  def letter_to_tenji_binary(letter)
+    return IRREGULARS[letter.to_sym] if letter.match?(/W|Y|N$/)
+
+    consonant = CONSONANTS[letter[0].to_sym] || Array.new(6, 0)
+    vowel = VOWELDS[letter[-1].to_sym]
+
+    [consonant, vowel].transpose.map { |a| a.inject(&:+) }.to_a
   end
 end
