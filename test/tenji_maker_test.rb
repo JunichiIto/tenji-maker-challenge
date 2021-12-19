@@ -63,4 +63,24 @@ class TenjiMakerTest < Minitest::Test
   # ここから上のテストは変更不可 =====================
 
   # 独自のテストパターンを追加するのは自由です
+
+  def test_a_binary
+    binary_letter = @tenji_maker.send(:letter_to_binary, 'A')
+    assert_equal binary_letter, [1, 0, 0, 0, 0, 0]
+  end
+
+  def test_ki_binary
+    binary_letter = @tenji_maker.send(:letter_to_binary, 'KI')
+    assert_equal binary_letter, [1, 1, 0, 0, 0, 1]
+  end
+
+  def test_n_binary
+    binary_letter = @tenji_maker.send(:letter_to_binary, 'N')
+    assert_equal binary_letter, [0, 0, 1, 0, 1, 1]
+  end
+
+  def test_ya_binary
+    binary_letter = @tenji_maker.send(:letter_to_binary, 'YA')
+    assert_equal binary_letter, [0, 0, 1, 1, 0, 0]
+  end
 end
