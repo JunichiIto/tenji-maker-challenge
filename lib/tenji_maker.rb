@@ -1,4 +1,4 @@
-require 'Matrix'
+require 'matrix'
 
 # 180度回転
 def rotate180(matrix)
@@ -24,7 +24,7 @@ class TenjiMaker
   class << self
     attr_accessor :boin, :siin
   end
-  
+
   @boin = {
     'A' => Matrix[
       [1, 0],
