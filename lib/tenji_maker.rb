@@ -23,7 +23,7 @@ class TenjiMaker
   }
 
   def to_tenji text
-    lines =[[], [], []]
+    lines = [[], [], []]
     text.split(' ').each do |t|
       @indexes = TABLE[t.to_sym] || TABLE[(t[0] + '_').to_sym] + TABLE[t[1].to_sym]
       draw.each_with_index{|line, i| lines[i] << line }
