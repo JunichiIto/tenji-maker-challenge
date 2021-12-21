@@ -25,21 +25,21 @@ class TenjiMaker
   def to_tenji text
     lines =[[], [], []]
     text.split(' ').each do |t|
-      indexes = TABLE[t.to_sym] || TABLE[(t[0] + '_').to_sym] + TABLE[t[1].to_sym]
-      draw(indexes).each_with_index{|line, i| lines[i] << line }
+      @indexes = TABLE[t.to_sym] || TABLE[(t[0] + '_').to_sym] + TABLE[t[1].to_sym]
+      draw.each_with_index{|line, i| lines[i] << line }
     end
     lines.map{|line| line.join(' ') }.join("\n")
   end
 
-  def draw indexes
+  def draw
     [
-      mark(indexes, 1) + mark(indexes, 4),
-      mark(indexes, 2) + mark(indexes, 5),
-      mark(indexes, 3) + mark(indexes, 6),
+      mark(1) + mark(4),
+      mark(2) + mark(5),
+      mark(3) + mark(6),
     ]
   end
 
-  def mark indexes, index
-    indexes.include?(index) ? 'o' : '-'
+  def mark index
+    @indexes.include?(index) ? 'o' : '-'
   end
 end
