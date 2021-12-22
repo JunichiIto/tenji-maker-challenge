@@ -31,6 +31,8 @@ class TenjiMaker
     lines.map{|line| line.join(' ') }.join("\n")
   end
 
+  private
+
   def draw
     [
       mark(1) + mark(4),
