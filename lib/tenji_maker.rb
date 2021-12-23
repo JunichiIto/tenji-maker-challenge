@@ -24,11 +24,12 @@ class TenjiMaker
 
   def to_tenji text
     lines = [[], [], []]
-    text.split(' ').each do |t|
-      @indexes = TABLE[t.to_sym] || TABLE[(t[0] + '_').to_sym] + TABLE[t[1].to_sym]
-      draw.each_with_index{|line, i| lines[i] << line }
+    text.split(' ').each do |romaji|
+      @indexes = TABLE[romaji.to_sym] ||
+        TABLE[(romaji[0] + '_').to_sym] + TABLE[romaji[1].to_sym]
+      draw.each_with_index{ lines[_2] << _1 }
     end
-    lines.map{|line| line.join(' ') }.join("\n")
+    lines.map{ _1.join(' ') }.join("\n")
   end
 
   private
