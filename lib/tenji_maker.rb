@@ -1,43 +1,16 @@
+require "tenji"
+
 class TenjiMaker
   def to_tenji(text)
-    # 以下はサンプルの仮実装なので、このcase文は全部消して自作ロジックに書き直すこと
-    case text
-    when 'A HI RU'
-      <<~TENJI.chomp
-        o- o- oo
-        -- o- -o
-        -- oo --
-      TENJI
-    when 'KI RI N'
-      <<~TENJI.chomp
-        o- o- --
-        o- oo -o
-        -o -- oo
-      TENJI
-    when 'SI MA U MA'
-      <<~TENJI.chomp
-        o- o- oo o-
-        oo -o -- -o
-        -o oo -- oo
-      TENJI
-    when 'NI WA TO RI'
-      <<~TENJI.chomp
-        o- -- -o o-
-        o- -- oo oo
-        o- o- o- --
-      TENJI
-    when 'HI YO KO'
-      <<~TENJI.chomp
-        o- -o -o
-        o- -o o-
-        oo o- -o
-      TENJI
-    when 'KI TU NE'
-      <<~TENJI.chomp
-        o- oo oo
-        o- -o o-
-        -o o- o-
-      TENJI
+    tenjis = text.split(" ").map { |str| Tenji.new(str) }
+
+    tenji_matrix = tenjis.map(&:to_h).map do |tenji_hash|
+      [
+        tenji_hash[1] + tenji_hash[4],
+        tenji_hash[2] + tenji_hash[5],
+        tenji_hash[3] + tenji_hash[6],
+      ]
     end
+    tenji_matrix.transpose.map { |arr| arr.join(" ") }.join("\n")
   end
 end
