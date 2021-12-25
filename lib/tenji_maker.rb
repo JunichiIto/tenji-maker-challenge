@@ -20,7 +20,7 @@ class TenjiMaker
 
   def binary_array_to_tenji_line(binary_array)
     binary_array.map { |bin|
-      bin.inject('') { |result, b| result + binary_to_dot(b) }
+      bin.sum('') { |b| binary_to_dot(b) }
     }.join(' ')
   end
 
