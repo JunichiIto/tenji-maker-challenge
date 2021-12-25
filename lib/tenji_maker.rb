@@ -40,6 +40,6 @@ class TenjiMaker
     consonant = CONSONANTS[letter[0].to_sym] || Array.new(6, 0)
     vowel = VOWELS[letter[-1].to_sym]
 
-    [consonant, vowel].transpose.map { |a| a.inject(&:+) }.to_a
+    [consonant, vowel].transpose.map { |a| a.inject(&:+) }
   end
 end
