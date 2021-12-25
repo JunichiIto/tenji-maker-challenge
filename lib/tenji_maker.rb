@@ -17,7 +17,7 @@ class TenjiMaker
       when 1
         stringify_character_tenji(BASE_WORD[word.upcase.to_sym])
       when 2
-        stringify_two_characters_tenji(word)
+        stringify_two_characters_tenji(word.upcase)
       when 3
         # TODO: stringify_three_characters_tenji()
       end

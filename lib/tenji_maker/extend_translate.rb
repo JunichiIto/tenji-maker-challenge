@@ -40,7 +40,7 @@ class ExtendTranslate
     end
   
     def stringify_two_characters_tenji(word)
-      word_key, consonant_key, vowel_key = word.upcase.to_sym, word[0].upcase.to_sym, word[1].upcase.to_sym
+      word_key, consonant_key, vowel_key = word.to_sym, word[0].to_sym, word[1].to_sym
       if EXCEPT_CONSONANT.include?(consonant_key)
         return stringify_character_tenji(DEFINE_CONSONANT[consonant_key][word_key])
       end
