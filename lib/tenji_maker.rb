@@ -1,43 +1,45 @@
+require 'constants'
+
 class TenjiMaker
+  include Constants
+
   def to_tenji(text)
-    # 以下はサンプルの仮実装なので、このcase文は全部消して自作ロジックに書き直すこと
-    case text
-    when 'A HI RU'
-      <<~TENJI.chomp
-        o- o- oo
-        -- o- -o
-        -- oo --
-      TENJI
-    when 'KI RI N'
-      <<~TENJI.chomp
-        o- o- --
-        o- oo -o
-        -o -- oo
-      TENJI
-    when 'SI MA U MA'
-      <<~TENJI.chomp
-        o- o- oo o-
-        oo -o -- -o
-        -o oo -- oo
-      TENJI
-    when 'NI WA TO RI'
-      <<~TENJI.chomp
-        o- -- -o o-
-        o- -- oo oo
-        o- o- o- --
-      TENJI
-    when 'HI YO KO'
-      <<~TENJI.chomp
-        o- -o -o
-        o- -o o-
-        oo o- -o
-      TENJI
-    when 'KI TU NE'
-      <<~TENJI.chomp
-        o- oo oo
-        o- -o o-
-        -o o- o-
-      TENJI
-    end
+    letters = text.split(' ')
+    tenji_binary_letters = letters.map { |letter| letter_to_tenji_binary(letter) }
+    tenji_binaries_matrix = tenji_binaries_to_matrix(tenji_binary_letters)
+    matrix_to_tenji(tenji_binaries_matrix)
+  end
+
+  private
+
+  def matrix_to_tenji(tenji_binaries_matrix)
+    tenji_binaries_matrix.map { |binary_array|
+      binary_array_to_tenji_line(binary_array)
+    }.join("\n")
+  end
+
+  def binary_array_to_tenji_line(binary_array)
+    binary_array.map { |bin|
+      bin.sum('') { |b| binary_to_dot(b) }
+    }.join(' ')
+  end
+
+  def binary_to_dot(binary)
+    binary.zero? ? '-' : 'o'
+  end
+
+  def tenji_binaries_to_matrix(tenji_binaries)
+    tenji_binaries.map { |letter|
+      letter.each_slice(3).to_a.transpose
+    }.transpose
+  end
+
+  def letter_to_tenji_binary(letter)
+    return IRREGULARS[letter.to_sym] if letter.match?(/W|Y|N$/)
+
+    consonant = CONSONANTS[letter[0].to_sym] || Array.new(6, 0)
+    vowel = VOWELS[letter[-1].to_sym]
+
+    [consonant, vowel].transpose.map { |a| a.inject(&:+) }
   end
 end
