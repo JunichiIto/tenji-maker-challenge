@@ -9,9 +9,6 @@ class Charactor
   #
   def initialize(charactor)
     @content = charactor
-    @size = charactor.size
-    @is_n = @size == 1 && charactor == 'N'
-    @is_vowel = @size == 1 && !@is_n
   end
 
   #
@@ -20,10 +17,24 @@ class Charactor
   # @return [Array]
   #
   def separate
-    return [@content[1], @content[0]] if @size == 2
-    return [nil, @content[0]] if @is_n
-    return [@content[0], nil] if @is_vowel
+    return [@content[1], @content[0]] if charactor_size == 2
+    return [nil, @content[0]] if n?
+    return [@content[0], nil] if vowel?
 
     raise '入力文字が正しくありません。'
+  end
+
+  private
+
+  def charactor_size
+    @content.size
+  end
+
+  def n?
+    charactor_size == 1 && @content == 'N'
+  end
+
+  def vowel?
+    charactor_size == 1 && !n?
   end
 end
