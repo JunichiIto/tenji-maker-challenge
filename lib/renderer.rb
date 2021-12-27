@@ -1,15 +1,4 @@
 class Renderer
-  attr_reader :rows
-
-  #
-  # 初期化
-  #
-  # @param [Array] strings
-  #
-  def initialize(strings)
-    @rows = strings.map { |string| Row.new(string) }
-  end
-
   class << self
     #
     # 出力する
@@ -19,63 +8,18 @@ class Renderer
     # @return [String]
     #
     def render(strings)
-      renderer = new(strings)
-      template(renderer)
+      3.times.map do |n|
+        strings.map { |string| parts(string, n) }.join(' ')
+      end.join("\n")
     end
 
     private
 
-    def template(renderer)
-      <<~TEXT.chomp
-        #{renderer.first_row}
-        #{renderer.second_row}
-        #{renderer.third_row}
-      TEXT
-    end
-  end
+    def parts(string, number)
+      return string.slice(0, 2) if number == 0
+      return string.slice(2, 2) if number == 1
 
-  #
-  # 1行目の出力
-  #
-  # @return [String]
-  #
-  def first_row
-    @rows.map(&:first).join(' ')
-  end
-
-  #
-  # 2行目の出力
-  #
-  # @return [String]
-  #
-  def second_row
-    @rows.map(&:second).join(' ')
-  end
-
-  #
-  # 3行目の出力
-  #
-  # @return [String]
-  #
-  def third_row
-    @rows.map(&:third).join(' ')
-  end
-
-  #
-  # 行
-  #
-  class Row
-    attr_reader :first, :second, :third
-
-    #
-    # 初期化
-    #
-    # @param [String] string
-    #
-    def initialize(string)
-      @first = string.slice(0, 2)
-      @second = string.slice(2, 2)
-      @third = string.slice(4, 2)
+      string.slice(4, 2) if number == 2
     end
   end
 end
