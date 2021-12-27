@@ -35,7 +35,7 @@ class Tenji
   # @return [String]
   #
   def convert
-    return convert_irregularly if irrejular?
+    return convert_irregularly if @romaji.irregular?
 
     convert_regularly
   end
@@ -63,17 +63,6 @@ class Tenji
     return '----o-' if @romaji.consonant_w?
 
     (%w[- o -] + TABLE[@romaji.vowel].rotate).join if @romaji.consonant_y?
-  end
-
-  #
-  # 不規則かどうか
-  #
-  # @return [boolean]
-  #
-  def irrejular?
-    @romaji.consonant_w? ||
-      @romaji.consonant_only_n? ||
-      @romaji.consonant_y?
   end
 
   #

@@ -15,6 +15,12 @@ class Romaji
     @consonant = consonant ? consonant.to_sym : nil
   end
 
+  def irregular?
+    consonant_w? ||
+      consonant_only_n? ||
+      consonant_y?
+  end
+
   #
   # 子音が w かどうか
   #
