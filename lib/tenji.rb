@@ -5,12 +5,23 @@ require_relative '../lib/charactor'
 # 点字
 #
 class Tenji
-  TABLE = {
+  # 点字1文字に対して番号を割り振った図
+  # ↓
+  # ① ②
+  # ③ ④
+  # ⑤ ⑥
+
+  # 上記点字文字の① ~ ③に該当する点字の対応表
+  UPPER_HALF_TENJI_TABLE = {
     A: %w[o - -],
     I: %w[o - o],
     U: %w[o o -],
     E: %w[o o o],
-    O: %w[- o o],
+    O: %w[- o o]
+  }.freeze
+
+  # 上記点字文字の④ ~ ⑥に該当する点字の対応表
+  LOWER_HALF_TENJI_TABLE = {
     K: %w[- - o],
     S: %w[o - o],
     T: %w[o o -],
@@ -48,8 +59,8 @@ class Tenji
   # @return [String]
   #
   def convert_regularly
-    vowel_tenjies = TABLE[@romaji.vowel]
-    consonant_tenjies = TABLE[@romaji.consonant] || %w[- - -]
+    vowel_tenjies = UPPER_HALF_TENJI_TABLE[@romaji.vowel]
+    consonant_tenjies = LOWER_HALF_TENJI_TABLE[@romaji.consonant] || %w[- - -]
     (vowel_tenjies + consonant_tenjies).join
   end
 
@@ -62,7 +73,7 @@ class Tenji
     return '---ooo' if @romaji.consonant_only_n?
     return '----o-' if @romaji.consonant_w?
 
-    (%w[- o -] + TABLE[@romaji.vowel].rotate).join if @romaji.consonant_y?
+    (%w[- o -] + UPPER_HALF_TENJI_TABLE[@romaji.vowel].rotate).join if @romaji.consonant_y?
   end
 
   #
