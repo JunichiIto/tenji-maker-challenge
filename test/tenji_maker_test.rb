@@ -9,7 +9,7 @@ class TenjiMakerTest < Minitest::Test
   end
 
   def test_a_hi_ru
-    tenji = @tenji_maker.to_tenji('A HI RU')
+    tenji = @tenji_maker.to_tenji('AHIRU')
     assert_equal <<~TENJI.chomp, tenji
       o- o- oo
       -- o- -o
@@ -18,7 +18,7 @@ class TenjiMakerTest < Minitest::Test
   end
 
   def test_ki_ri_n
-    tenji = @tenji_maker.to_tenji('KI RI N')
+    tenji = @tenji_maker.to_tenji('KIRIN')
     assert_equal <<~TENJI.chomp, tenji
       o- o- --
       o- oo -o
@@ -27,7 +27,7 @@ class TenjiMakerTest < Minitest::Test
   end
 
   def test_si_ma_u_ma
-    tenji = @tenji_maker.to_tenji('SI MA U MA')
+    tenji = @tenji_maker.to_tenji('SIMAUMA')
     assert_equal <<~TENJI.chomp, tenji
       o- o- oo o-
       oo -o -- -o
@@ -36,7 +36,7 @@ class TenjiMakerTest < Minitest::Test
   end
 
   def test_ni_wa_to_ri
-    tenji = @tenji_maker.to_tenji('NI WA TO RI')
+    tenji = @tenji_maker.to_tenji('NIWATORI')
     assert_equal <<~TENJI.chomp, tenji
       o- -- -o o-
       o- -- oo oo
@@ -45,7 +45,7 @@ class TenjiMakerTest < Minitest::Test
   end
 
   def test_hi_yo_ko
-    tenji = @tenji_maker.to_tenji('HI YO KO')
+    tenji = @tenji_maker.to_tenji('HIYOKO')
     assert_equal <<~TENJI.chomp, tenji
       o- -o -o
       o- -o o-
@@ -54,7 +54,7 @@ class TenjiMakerTest < Minitest::Test
   end
 
   def test_ki_tu_ne
-    tenji = @tenji_maker.to_tenji('KI TU NE')
+    tenji = @tenji_maker.to_tenji('KITUNE')
     assert_equal <<~TENJI.chomp, tenji
       o- oo oo
       o- -o o-
@@ -68,7 +68,7 @@ class TenjiMakerTest < Minitest::Test
   # verified by http://www.hogera.com/pcb/cgi/tenji.cgi
   # あきすてのはみゆれを
   def test_all_unvoiced # 清音
-    tenji = @tenji_maker.to_tenji('A KI SU TE NO HA MI YU RE WO')
+    tenji = @tenji_maker.to_tenji('AKISUTENOHAMIYUREWO')
     assert_equal <<~TENJI.chomp, tenji
       o- o- oo oo -o o- o- -o oo --
       -- o- -o oo o- -- oo -- oo -o
@@ -78,7 +78,7 @@ class TenjiMakerTest < Minitest::Test
 
   # わゐゆゑを
   def test_vowel_down
-    tenji = @tenji_maker.to_tenji('WA WI YU WE WO')
+    tenji = @tenji_maker.to_tenji('WAWIYUWEWO')
     assert_equal <<~TENJI.chomp, tenji
       -- -- -o -- --
       -- o- -- oo -o
@@ -88,7 +88,7 @@ class TenjiMakerTest < Minitest::Test
 
   # がじづべぽ
   def test_voiced
-    tenji = @tenji_maker.to_tenji('GA ZI DU BE PO')
+    tenji = @tenji_maker.to_tenji('GAZIDUBEPO')
     assert_equal <<~TENJI.chomp, tenji
       -- o- -- o- -- oo -- oo -- -o
       -o -- -o oo -o -o -o o- -- o-
@@ -98,7 +98,7 @@ class TenjiMakerTest < Minitest::Test
 
   # きゃしゅちょにゃひゅみょりゃ
   def test_contracted_1 # 拗音
-    tenji = @tenji_maker.to_tenji('KYA SYU TYO NYA HYU MYO RYA')
+    tenji = @tenji_maker.to_tenji('KYASYUTYONYAHYUMYORYA')
     assert_equal <<~TENJI.chomp, tenji
       -o o- -o oo -o -o -o o- -o oo -o -o -o o-
       -- -- -- -o -- oo -- -- -- -- -- oo -- -o
@@ -108,7 +108,7 @@ class TenjiMakerTest < Minitest::Test
 
   # ぎゅじょぢゃびゅぴょくぁうぉつぃふぇぐぁヴィ
   def test_contracted_2 # 拗音
-    tenji = @tenji_maker.to_tenji('GYU ZYO DYA BYU PYO KWA WHO TSI FE GWA VI')
+    tenji = @tenji_maker.to_tenji('GYUZYODYABYUPYOKWAWHOTSIFEGWAVI')
     assert_equal <<~TENJI.chomp, tenji
       -o oo -o -o -o o- -o oo -o -o -- o- -- -o -- o- -- oo -- o- -- o-
       -o -- -o oo -o -o -o -- -- o- o- -- o- o- o- oo o- o- oo -- oo o-
@@ -118,7 +118,7 @@ class TenjiMakerTest < Minitest::Test
 
   # こーもり
   def test_longvowel # 長音
-    tenji = @tenji_maker.to_tenji('KO - MO RI')
+    tenji = @tenji_maker.to_tenji('KO-MORI')
     assert_equal <<~TENJI.chomp, tenji
       -o -- -o o-
       o- oo oo oo
@@ -159,7 +159,7 @@ class TenjiMakerTest < Minitest::Test
 
   # braille symbol出力拡張
   def test_all_unvoiced_symbol
-    tenji = @tenji_maker.to_braille('A KI SU TE NO HA MI YU RE WO')
+    tenji = @tenji_maker.to_braille('AKISUTENOHAMIYUREWO')
     assert_equal <<~TENJI.chomp, tenji
       ⠁⠣⠹⠟⠎⠥⠷⠬⠛⠔
     TENJI

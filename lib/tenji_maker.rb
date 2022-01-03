@@ -37,6 +37,7 @@ class TenjiMaker
         current_consonant = ''
         roman.each_char{|c|
             if c == ' '
+                codes.push(0)
             elsif c == '-'
                 raise '子音(%s)の後に長音を挿入しようとしました'%current_consonant if !current_consonant.empty?
                 codes.push(Dash)
