@@ -3,13 +3,14 @@
 
 class TenjiMaker
 
-    Vowels = {
+    VOWELS = {
         'A'=>0b100000, 'I'=>0b101000, 'U'=>0b110000, 'E'=>0b111000, 'O'=>0b011000
     }
-    VowelsDown = {
+    VOWELS_DOWN = {
+        # Y行とW行は最下段まで下ろした母音を用いる
         'A'=>0b000010, 'I'=>0b001010, 'U'=>0b000011, 'E'=>0b001110, 'O'=>0b000110
     }
-    Consonants = {
+    CONSONANTS = {
         ''=>  [0b000000],           'K'=> [0b000001],           'S'=> [0b000101],           'T'=> [0b000110],           'N'=> [0b000010],
         'H'=> [0b000011],           'M'=> [0b000111],           'Y'=> [0b010000],           'R'=> [0b000100],           'W'=> [0b000000],
         'G'=> [0b000100, 0b000001], 'Z'=> [0b000100, 0b000101], 'D'=> [0b000100, 0b000110], 'B'=> [0b000100, 0b000011], 'P'=> [0b000001, 0b000011],
@@ -21,7 +22,9 @@ class TenjiMaker
     }
     N = 0b000111
     T = 0b001000
-    Dash = 0b001100
+    DASH = 0b001100
+
+private
 
     def codes_to_braille(codes)
         codepoint_map = [32,4,16,2,8,1]
@@ -55,14 +58,14 @@ class TenjiMaker
                 codes.push(0b001110)
             elsif c == '-'
                 raise '子音(%s)の後に長音を挿入しようとしました'%current_consonant if !current_consonant.empty?
-                codes.push(Dash)
-            elsif Vowels.include?(c)
+                codes.push(DASH)
+            elsif VOWELS.include?(c)
                 if ['Y', 'W'].include?(current_consonant)
-                    vowel_code = VowelsDown[c]
+                    vowel_code = VOWELS_DOWN[c]
                 else
-                    vowel_code = Vowels[c]
+                    vowel_code = VOWELS[c]
                 end
-                consonant_code = Consonants[current_consonant]
+                consonant_code = CONSONANTS[current_consonant]
                 codes.concat(consonant_code[0...-1] + [consonant_code[-1] | vowel_code])
                 current_consonant = ''
             else
@@ -76,7 +79,7 @@ class TenjiMaker
                     end
                 else
                     current_consonant += c
-                    if !Consonants.include?(current_consonant)
+                    if !CONSONANTS.include?(current_consonant)
                         raise '予期せぬ子音(%s)が入力されました'%current_consonant if current_consonant[0]!='N'
                         codes.push(N)
                         current_consonant = current_consonant[1..-1]
@@ -90,6 +93,8 @@ class TenjiMaker
         end
         codes
     end
+
+public
 
     def to_tenji(roman)
         codes_to_tenji roman_to_codes roman
