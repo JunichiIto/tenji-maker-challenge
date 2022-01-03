@@ -19,13 +19,20 @@ class TenjiMaker
         'WH'=>[0b001001, 0b000000], 'KW'=>[0b001001, 0b000001], 'TS'=>[0b001001, 0b000110], 'F'=> [0b001001, 0b000011],
         'GW'=>[0b001101, 0b000001], 'V'=> [0b001101, 0b000011],
     }
-    N = 7
-    T = 8
-    Dash = 12
+    N = 0b000111
+    T = 0b001000
+    Dash = 0b001100
 
     def codes_to_braille(codes)
         codepoint_map = [32,4,16,2,8,1]
         codes.map{|e|(0..5).reduce(0x2800){|s,i|s+e[i]*codepoint_map[i]}.chr('UTF-8')}*''
+    end
+
+    def codes_to_base64(codes)
+        # quite similar to codes_to_braille except transcode table.
+        base64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+        codepoint_map = [32,4,16,2,8,1]
+        codes.map{|e|base64[(0..5).reduce(0){|s,i|s+e[i]*codepoint_map[i]}]}*''
     end
 
     def codes_to_tenji(codes)
@@ -38,6 +45,14 @@ class TenjiMaker
         roman.each_char{|c|
             if c == ' '
                 codes.push(0)
+            elsif c == ','
+                codes.push(0b000101)
+            elsif c == '.'
+                codes.push(0b001101)
+            elsif c == '?'
+                codes.push(0b001001)
+            elsif c == '!'
+                codes.push(0b001110)
             elsif c == '-'
                 raise '子音(%s)の後に長音を挿入しようとしました'%current_consonant if !current_consonant.empty?
                 codes.push(Dash)
@@ -82,6 +97,10 @@ class TenjiMaker
 
     def to_braille(roman)
         codes_to_braille roman_to_codes roman
+    end
+
+    def to_base64(roman)
+        codes_to_base64 roman_to_codes roman
     end
 
 end
